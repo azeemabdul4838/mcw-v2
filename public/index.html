@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MCW — Men Clothing Wear</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #e8b86d;
+      --gold-light: #f5d08a;
+      --dark: #0e0e0e;
+      --dark2: #1a1a1a;
+      --dark3: #242424;
+      --gray: #888;
+      --border: #2a2a2a;
+      --white: #f5f5f0;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--dark); color:var(--white); }
+
+    /* ── NAVBAR ── */
+    nav {
+      position:sticky; top:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 40px; background:rgba(14,14,14,0.95);
+      backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
+    }
+    .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--gold); letter-spacing:4px; }
+    .nav-links { display:flex; gap:32px; list-style:none; }
+    .nav-links a { color:#aaa; text-decoration:none; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+    .nav-right { display:flex; gap:10px; align-items:center; }
+    .nav-user { color:var(--gold); font-size:13px; font-weight:500; }
+    .btn-nav { padding:8px 20px; border-radius:4px; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.2s; }
+    .btn-login { background:transparent; color:var(--white); border:1px solid #444; }
+    .btn-login:hover { border-color:var(--gold); color:var(--gold); }
+    .btn-logout { background:transparent; color:#666; border:1px solid #333; }
+    .btn-cart { background:var(--gold); color:var(--dark); border:none; font-weight:600; }
+    .btn-cart:hover { background:var(--gold-light); }
+
+    /* ── MODAL ── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:#111; border:1px solid var(--border); border-radius:16px; padding:40px 36px; width:100%; max-width:420px; position:relative; animation:slideUp 0.3s ease; }
+    @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:#666; font-size:20px; cursor:pointer; }
+    .modal-close:hover { color:var(--white); }
+    .modal-logo { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--gold); letter-spacing:3px; margin-bottom:4px; }
+    .modal-sub { font-size:13px; color:var(--gray); margin-bottom:24px; }
+    .modal-tabs { display:flex; border-bottom:1px solid var(--border); margin-bottom:24px; }
+    .modal-tab { flex:1; padding:10px; text-align:center; font-size:12px; font-weight:500; cursor:pointer; color:#666; border-bottom:2px solid transparent; letter-spacing:1px; text-transform:uppercase; transition:all 0.2s; }
+    .modal-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+    .form-group { margin-bottom:16px; }
+    .form-group label { display:block; font-size:11px; font-weight:600; color:#666; margin-bottom:6px; letter-spacing:1.5px; text-transform:uppercase; }
+    .form-group input { width:100%; padding:11px 14px; background:#1a1a1a; border:1px solid var(--border); border-radius:8px; font-size:14px; color:var(--white); outline:none; transition:border-color 0.2s; }
+    .form-group input:focus { border-color:var(--gold); }
+    .form-submit { width:100%; background:var(--gold); color:var(--dark); border:none; padding:13px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:1px; margin-top:8px; transition:background 0.2s; }
+    .form-submit:hover { background:var(--gold-light); }
+    .form-error { background:#2a1010; color:#e57373; border:1px solid #5a2020; border-radius:8px; padding:10px 14px; font-size:13px; margin-bottom:14px; display:none; }
+    .form-success { background:#0a2a1a; color:#66bb6a; border:1px solid #1a5a2a; border-radius:8px; padding:10px 14px; font-size:13px; margin-bottom:14px; display:none; }
+
+    /* ── CART DRAWER ── */
+    .cart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:9998; }
+    .cart-overlay.open { display:block; }
+    .cart-drawer { position:fixed; top:0; right:-420px; width:400px; height:100vh; background:#111; border-left:1px solid var(--border); z-index:9999; transition:right 0.3s ease; display:flex; flex-direction:column; }
+    .cart-drawer.open { right:0; }
+    .cart-header { padding:24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .cart-header h3 { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:var(--gold); }
+    .cart-close { background:none; border:none; color:#666; font-size:24px; cursor:pointer; }
+    .cart-items { flex:1; overflow-y:auto; padding:16px 24px; }
+    .cart-footer { padding:24px; border-top:1px solid var(--border); }
+    .cart-total-row { display:flex; justify-content:space-between; font-size:16px; font-weight:600; margin-bottom:16px; }
+    .btn-checkout { width:100%; background:var(--gold); color:var(--dark); border:none; padding:14px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:1px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height:90vh; display:flex; align-items:center;
+      background:linear-gradient(135deg, #0e0e0e 0%, #1a1208 50%, #0e0e0e 100%);
+      padding:80px 40px; position:relative; overflow:hidden;
+    }
+    .hero::before { content:''; position:absolute; top:-100px; right:-100px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle, rgba(232,184,109,0.08) 0%, transparent 70%); }
+    .hero::after { content:''; position:absolute; bottom:-50px; left:10%; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle, rgba(232,184,109,0.04) 0%, transparent 70%); }
+    .hero-content { max-width:680px; z-index:1; }
+    .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(232,184,109,0.1); border:1px solid rgba(232,184,109,0.3); color:var(--gold); font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; padding:6px 16px; border-radius:100px; margin-bottom:24px; }
+    .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(60px,10vw,120px); line-height:0.9; margin-bottom:24px; }
+    .hero-title .accent { color:var(--gold); }
+    .hero-sub { font-size:16px; color:#999; line-height:1.8; margin-bottom:40px; max-width:480px; font-weight:300; }
+    .hero-btns { display:flex; gap:16px; flex-wrap:wrap; }
+    .btn-primary { background:var(--gold); color:var(--dark); border:none; padding:16px 36px; font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border-radius:4px; cursor:pointer; transition:all 0.2s; }
+    .btn-primary:hover { background:var(--gold-light); transform:translateY(-2px); }
+    .btn-outline { background:transparent; color:var(--white); border:1px solid #444; padding:16px 36px; font-size:13px; font-weight:500; letter-spacing:2px; text-transform:uppercase; border-radius:4px; cursor:pointer; transition:all 0.2s; }
+    .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+    .hero-stats { display:flex; gap:48px; margin-top:64px; padding-top:40px; border-top:1px solid var(--border); }
+    .stat-num { font-family:'Bebas Neue',sans-serif; font-size:40px; color:var(--gold); line-height:1; }
+    .stat-label { font-size:12px; color:#666; letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
+
+    /* ── ADSENSE SLOTS ── */
+    .ad-slot { background:var(--dark2); border:1px dashed var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#444; font-size:12px; letter-spacing:1px; text-transform:uppercase; margin:32px 40px; }
+    .ad-slot-banner { height:90px; }
+    .ad-slot-square { height:250px; max-width:300px; }
+
+    /* ── SECTIONS ── */
+    .section { padding:80px 40px; }
+    .section-header { margin-bottom:48px; }
+    .section-eyebrow { font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+    .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,5vw,56px); line-height:1; }
+    .section-sub { font-size:15px; color:var(--gray); margin-top:12px; font-weight:300; }
+
+    /* ── CATEGORIES ── */
+    .categories-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+    .cat-card { background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:28px 16px; text-align:center; cursor:pointer; transition:all 0.2s; }
+    .cat-card:hover { background:var(--dark3); border-color:var(--gold); transform:translateY(-4px); }
+    .cat-card i { font-size:32px; color:var(--gold); margin-bottom:10px; display:block; }
+    .cat-card span { font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#aaa; }
+
+    /* ── PRODUCTS ── */
+    .tabs { display:flex; gap:8px; margin-bottom:32px; flex-wrap:wrap; }
+    .tab { background:transparent; border:1px solid var(--border); padding:8px 20px; border-radius:100px; font-size:12px; cursor:pointer; letter-spacing:1px; text-transform:uppercase; color:#666; transition:all 0.2s; }
+    .tab.active, .tab:hover { background:var(--gold); color:var(--dark); border-color:var(--gold); font-weight:600; }
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; }
+    .product-card { background:var(--dark2); border:1px solid var(--border); border-radius:16px; overflow:hidden; cursor:pointer; transition:all 0.25s; }
+    .product-card:hover { border-color:var(--gold); transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,0.4); }
+    .product-img { height:180px; background:var(--dark3); display:flex; align-items:center; justify-content:center; position:relative; }
+    .product-img i { font-size:56px; color:var(--gold); opacity:0.6; }
+    .product-tag { position:absolute; top:10px; left:10px; background:var(--gold); color:var(--dark); font-size:10px; font-weight:700; padding:3px 10px; border-radius:100px; letter-spacing:1px; text-transform:uppercase; }
+    .product-info { padding:16px; }
+    .product-name { font-size:15px; font-weight:600; margin-bottom:4px; }
+    .product-cat { font-size:11px; color:var(--gray); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase; }
+    .product-row { display:flex; align-items:center; justify-content:space-between; }
+    .product-price { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--gold); letter-spacing:1px; }
+    .product-add { background:var(--gold); color:var(--dark); border:none; width:32px; height:32px; border-radius:50%; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:700; transition:all 0.2s; }
+    .product-add:hover { background:var(--gold-light); transform:scale(1.1); }
+
+    /* ── BLOG SECTION ── */
+    .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; }
+    .blog-card { background:var(--dark2); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:all 0.25s; cursor:pointer; }
+    .blog-card:hover { border-color:var(--gold); transform:translateY(-4px); }
+    .blog-img { height:180px; background:linear-gradient(135deg,var(--dark3),#1a1208); display:flex; align-items:center; justify-content:center; position:relative; }
+    .blog-img i { font-size:48px; color:var(--gold); opacity:0.4; }
+    .blog-category { position:absolute; top:12px; left:12px; background:var(--gold); color:var(--dark); font-size:10px; font-weight:700; padding:3px 10px; border-radius:100px; letter-spacing:1px; text-transform:uppercase; }
+    .blog-body { padding:20px; }
+    .blog-title { font-size:17px; font-weight:600; line-height:1.4; margin-bottom:8px; }
+    .blog-excerpt { font-size:13px; color:var(--gray); line-height:1.7; margin-bottom:16px; font-weight:300; }
+    .blog-meta { display:flex; align-items:center; justify-content:space-between; }
+    .blog-date { font-size:11px; color:#555; letter-spacing:1px; }
+    .blog-read { font-size:12px; color:var(--gold); font-weight:600; letter-spacing:1px; text-transform:uppercase; }
+
+    /* ── AFFILIATE SECTION ── */
+    .affiliate-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:20px; }
+    .affiliate-card { background:var(--dark2); border:1px solid var(--border); border-radius:16px; padding:24px; transition:all 0.25s; }
+    .affiliate-card:hover { border-color:var(--gold); }
+    .affiliate-brand { font-size:11px; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+    .affiliate-title { font-size:16px; font-weight:600; margin-bottom:8px; }
+    .affiliate-desc { font-size:13px; color:var(--gray); line-height:1.6; margin-bottom:16px; font-weight:300; }
+    .affiliate-commission { font-size:12px; color:#66bb6a; margin-bottom:16px; }
+    .affiliate-btn { display:block; text-align:center; background:transparent; color:var(--gold); border:1px solid var(--gold); padding:10px; border-radius:8px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+    .affiliate-btn:hover { background:var(--gold); color:var(--dark); }
+
+    /* ── OFFER BANNER ── */
+    .offer-banner { background:linear-gradient(135deg,#1a1208,#2a1e08); border:1px solid rgba(232,184,109,0.3); border-radius:16px; padding:40px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; margin:0 40px 40px; }
+    .offer-text h3 { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--gold); letter-spacing:2px; }
+    .offer-text p { font-size:14px; color:#999; margin-top:4px; }
+    .offer-code { background:rgba(232,184,109,0.1); border:1px dashed var(--gold); padding:8px 20px; border-radius:8px; font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--gold); letter-spacing:4px; }
+
+    /* ── FEATURES ── */
+    .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+    .feat { background:var(--dark2); padding:32px 24px; text-align:center; }
+    .feat i { font-size:32px; color:var(--gold); margin-bottom:12px; display:block; }
+    .feat h4 { font-size:14px; font-weight:600; margin-bottom:6px; }
+    .feat p { font-size:12px; color:var(--gray); }
+
+    /* ── FOOTER ── */
+    footer { background:var(--dark2); border-top:1px solid var(--border); padding:60px 40px 32px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+    .footer-brand { font-family:'Bebas Neue',sans-serif; font-size:32px; color:var(--gold); letter-spacing:4px; margin-bottom:12px; }
+    .footer-tagline { font-size:13px; color:#555; line-height:1.8; max-width:280px; }
+    footer h4 { font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#666; margin-bottom:16px; }
+    footer ul { list-style:none; }
+    footer li { font-size:13px; margin-bottom:10px; color:#555; cursor:pointer; transition:color 0.2s; }
+    footer li:hover { color:var(--gold); }
+    .footer-bottom { padding-top:24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .footer-bottom p { font-size:12px; color:#444; }
+
+    /* ── TOAST ── */
+    .toast { position:fixed; bottom:24px; right:24px; background:var(--dark2); color:var(--gold); border:1px solid var(--border); padding:14px 22px; border-radius:10px; font-size:14px; z-index:99999; animation:fadeUp 0.3s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px) {
+      nav { padding:14px 20px; }
+      .nav-links { display:none; }
+      .hero { padding:60px 20px; min-height:70vh; }
+      .hero-stats { gap:24px; }
+      .section { padding:60px 20px; }
+      .ad-slot { margin:24px 20px; }
+      .offer-banner { margin:0 20px 32px; padding:28px 20px; }
+      .footer-grid { grid-template-columns:1fr 1fr; gap:32px; }
+      footer { padding:40px 20px 24px; }
+      .cart-drawer { width:100%; right:-100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="nav-logo">MCW</div>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#shop" onclick="scrollTo('shop')">Shop</a></li>
+    <li><a href="#blog" onclick="scrollTo('blog')">Blog</a></li>
+    <li><a href="#deals" onclick="scrollTo('deals')">Deals</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-username" style="display:none;"></span>
+    <button class="btn-nav btn-logout" id="nav-logout-btn" style="display:none;" onclick="logout()">Logout</button>
+    <button class="btn-nav btn-login" id="nav-login-btn" onclick="openModal()">Login / Register</button>
+    <button class="btn-nav btn-cart" onclick="openCart()">
+      <i class="ti ti-shopping-bag"></i> Cart (<span id="cart-count">0</span>)
+    </button>
+  </div>
+</nav>
+
+<!-- ── LOGIN MODAL ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-logo">MCW</div>
+    <div class="modal-sub">Men Clothing Wear — Welcome!</div>
+    <div class="modal-tabs">
+      <div class="modal-tab active" id="tab-login" onclick="switchTab('login')">Login</div>
+      <div class="modal-tab" id="tab-register" onclick="switchTab('register')">Register</div>
+    </div>
+    <div class="form-error" id="form-error"></div>
+    <div class="form-success" id="form-success"></div>
+    <div id="login-form">
+      <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com"/></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="Your password"/></div>
+      <button class="form-submit" onclick="handleLogin()">Login to My Account</button>
+    </div>
+    <div id="register-form" style="display:none;">
+      <div class="form-group"><label>Full Name</label><input type="text" id="reg-name" placeholder="Your full name"/></div>
+      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="you@example.com"/></div>
+      <div class="form-group"><label>Password</label><input type="password" id="reg-password" placeholder="Choose a password"/></div>
+      <div class="form-group"><label>Confirm Password</label><input type="password" id="reg-confirm" placeholder="Repeat password"/></div>
+      <button class="form-submit" onclick="handleRegister()">Create My Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CART DRAWER ── -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <span id="cart-total">₹0</span>
+    </div>
+    <button class="btn-checkout" onclick="checkout('Default Address')">Checkout with Razorpay</button>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><i class="ti ti-bolt"></i> New Drop 2026</div>
+    <h1 class="hero-title">WEAR THE<br><span class="accent">STREET.</span><br>OWN THE LOOK.</h1>
+    <p class="hero-sub">Premium casual & streetwear for the modern man. Bold fits, everyday comfort, zero compromise.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+      <button class="btn-outline" onclick="document.getElementById('blog').scrollIntoView({behavior:'smooth'})">Read Blog</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">500+</div><div class="stat-label">Products</div></div>
+      <div><div class="stat-num">12K+</div><div class="stat-label">Customers</div></div>
+      <div><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ADSENSE BANNER TOP ── -->
+<div class="ad-slot ad-slot-banner">
+  <!-- Google AdSense Banner Ad — Replace with actual AdSense code after approval -->
+  <span>Advertisement</span>
+</div>
+
+<!-- ── CATEGORIES ── -->
+<section class="section" style="padding-bottom:40px;">
+  <div class="section-header">
+    <div class="section-eyebrow">Browse</div>
+    <h2 class="section-title">SHOP BY STYLE</h2>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card" onclick="filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+    <div class="cat-card" onclick="filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+    <div class="cat-card" onclick="filterByCategory('Joggers')"><i class="ti ti-run"></i><span>Joggers</span></div>
+    <div class="cat-card" onclick="filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+    <div class="cat-card" onclick="filterByCategory('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
+  </div>
+</section>
+
+<!-- ── PRODUCTS ── -->
+<section class="section" id="shop" style="padding-top:40px;">
+  <div class="section-header">
+    <div class="section-eyebrow">Featured</div>
+    <h2 class="section-title">BEST SELLERS</h2>
+    <p class="section-sub">Handpicked styles for the modern man</p>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="filterByCategory('')">All</button>
+    <button class="tab" onclick="filterByCategory('T-Shirts')">T-Shirts</button>
+    <button class="tab" onclick="filterByCategory('Jackets')">Jackets</button>
+    <button class="tab" onclick="filterByCategory('Hoodies')">Hoodies</button>
+    <button class="tab" onclick="filterByCategory('Joggers')">Joggers</button>
+  </div>
+  <div class="products-grid" id="products-grid">
+    <div style="color:#555; font-size:14px; padding:40px; grid-column:1/-1; text-align:center;">Loading products...</div>
+  </div>
+</section>
+
+<!-- ── ADSENSE SQUARE ── -->
+<div style="display:flex;justify-content:center;padding:0 40px 40px;">
+  <div class="ad-slot ad-slot-square" style="width:100%;max-width:728px;height:90px;">
+    <!-- Google AdSense Rectangle Ad — Replace with actual AdSense code -->
+    <span>Advertisement</span>
+  </div>
+</div>
+
+<!-- ── OFFER BANNER ── -->
+<div class="offer-banner" id="deals">
+  <div class="offer-text">
+    <h3>FLAT 30% OFF — LIMITED TIME</h3>
+    <p>Use code at checkout. Today only. Free shipping above ₹999.</p>
+  </div>
+  <div class="offer-code">MCW30</div>
+  <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Grab the Deal</button>
+</div>
+
+<!-- ── BLOG SECTION ── -->
+<section class="section" id="blog">
+  <div class="section-header">
+    <div class="section-eyebrow">Fashion Tips & Guides</div>
+    <h2 class="section-title">FROM THE BLOG</h2>
+    <p class="section-sub">Style guides, trend reports & honest product reviews with the best deals</p>
+  </div>
+
+  <!-- AdSense inside blog section -->
+  <div class="ad-slot ad-slot-banner" style="margin:0 0 32px;">
+    <!-- Google AdSense In-Article Ad -->
+    <span>Advertisement</span>
+  </div>
+
+  <div class="blog-grid">
+    <div class="blog-card" onclick="openBlogPost('hoodies')">
+      <div class="blog-img"><i class="ti ti-article"></i><div class="blog-category">Buying Guide</div></div>
+      <div class="blog-body">
+        <div class="blog-title">Best Hoodies for Men Under ₹2000 in 2026</div>
+        <div class="blog-excerpt">We tested 15 hoodies so you don't have to. Here are the ones actually worth your money this winter season.</div>
+        <div class="blog-meta"><span class="blog-date">June 2026</span><span class="blog-read">Read More →</span></div>
+      </div>
+    </div>
+    <div class="blog-card" onclick="openBlogPost('style')">
+      <div class="blog-img"><i class="ti ti-sparkles"></i><div class="blog-category">Style Tips</div></div>
+      <div class="blog-body">
+        <div class="blog-title">How to Style Oversized T-Shirts Like a Pro</div>
+        <div class="blog-excerpt">The oversized trend is here to stay. Learn how to nail the fit without looking sloppy with these 5 simple rules.</div>
+        <div class="blog-meta"><span class="blog-date">June 2026</span><span class="blog-read">Read More →</span></div>
+      </div>
+    </div>
+    <div class="blog-card" onclick="openBlogPost('sneakers')">
+      <div class="blog-img"><i class="ti ti-shoe"></i><div class="blog-category">Product Review</div></div>
+      <div class="blog-body">
+        <div class="blog-title">Top 10 Sneakers Under ₹3000 — Honest Review</div>
+        <div class="blog-excerpt">From Nike to local brands — we rank the best budget sneakers you can buy right now on Amazon and Myntra.</div>
+        <div class="blog-meta"><span class="blog-date">May 2026</span><span class="blog-read">Read More →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AFFILIATE DEALS SECTION ── -->
+<section class="section" style="padding-top:0;">
+  <div class="section-header">
+    <div class="section-eyebrow">Partner Deals</div>
+    <h2 class="section-title">BEST DEALS ON OTHER BRANDS</h2>
+    <p class="section-sub">Handpicked deals from Amazon, Myntra & more — we earn a small commission at no extra cost to you</p>
+  </div>
+  <div class="affiliate-grid">
+    <div class="affiliate-card">
+      <div class="affiliate-brand">Amazon India</div>
+      <div class="affiliate-title">Nike Dri-FIT T-Shirts</div>
+      <div class="affiliate-desc">Best-selling Nike performance tees. Sweat-wicking, comfortable for gym and casual wear.</div>
+      <div class="affiliate-commission">✅ Up to 9% commission</div>
+      <a class="affiliate-btn" href="https://www.amazon.in/s?k=nike+dri+fit+tshirt" target="_blank">Shop on Amazon →</a>
+    </div>
+    <div class="affiliate-card">
+      <div class="affiliate-brand">Myntra</div>
+      <div class="affiliate-title">Roadster Hoodies Collection</div>
+      <div class="affiliate-desc">Myntra's bestselling hoodie brand. Great quality at unbeatable Indian prices.</div>
+      <div class="affiliate-commission">✅ Up to 10% commission</div>
+      <a class="affiliate-btn" href="https://www.myntra.com/hoodies" target="_blank">Shop on Myntra →</a>
+    </div>
+    <div class="affiliate-card">
+      <div class="affiliate-brand">Amazon India</div>
+      <div class="affiliate-title">Men's Joggers & Track Pants</div>
+      <div class="affiliate-desc">Top rated joggers for gym, running or casual streetwear. Multiple brands available.</div>
+      <div class="affiliate-commission">✅ Up to 9% commission</div>
+      <a class="affiliate-btn" href="https://www.amazon.in/s?k=mens+joggers" target="_blank">Shop on Amazon →</a>
+    </div>
+    <div class="affiliate-card">
+      <div class="affiliate-brand">Flipkart</div>
+      <div class="affiliate-title">Men's Jackets & Windcheaters</div>
+      <div class="affiliate-desc">Best deals on men's jackets this season. From bomber to varsity — all styles covered.</div>
+      <div class="affiliate-commission">✅ Up to 10% commission</div>
+      <a class="affiliate-btn" href="https://www.flipkart.com/mens-jackets" target="_blank">Shop on Flipkart →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── ADSENSE BOTTOM BANNER ── -->
+<div class="ad-slot ad-slot-banner">
+  <!-- Google AdSense Footer Banner — Replace with actual AdSense code -->
+  <span>Advertisement</span>
+</div>
+
+<!-- ── FEATURES ── -->
+<section class="section" style="padding-top:40px;">
+  <div class="features-grid">
+    <div class="feat"><i class="ti ti-truck-delivery"></i><h4>Free Delivery</h4><p>On orders above ₹999</p></div>
+    <div class="feat"><i class="ti ti-refresh"></i><h4>Easy Returns</h4><p>15-day hassle-free return</p></div>
+    <div class="feat"><i class="ti ti-shield-check"></i><h4>100% Authentic</h4><p>Quality guaranteed</p></div>
+    <div class="feat"><i class="ti ti-headset"></i><h4>24/7 Support</h4><p>We're always here</p></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">MCW</div>
+      <p class="footer-tagline">Men Clothing Wear — bold fits for the modern man. Premium streetwear & fashion guides.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li onclick="filterByCategory('T-Shirts')">T-Shirts</li>
+        <li onclick="filterByCategory('Jackets')">Jackets</li>
+        <li onclick="filterByCategory('Hoodies')">Hoodies</li>
+        <li onclick="filterByCategory('Joggers')">Joggers</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Blog</h4>
+      <ul>
+        <li>Style Guides</li>
+        <li>Buying Guides</li>
+        <li>Brand Reviews</li>
+        <li>Trend Reports</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li>Size Guide</li>
+        <li>Track Order</li>
+        <li>Returns</li>
+        <li>Contact Us</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 MCW — Men Clothing Wear. All rights reserved.</p>
+    <p style="font-size:11px;color:#333;">This site contains affiliate links. We may earn a commission when you purchase through our links.</p>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ── -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+// ── NAV AUTH UI ──────────────────────────────────────────────
+function updateNavAuth(user) {
+  if (user) {
+    document.getElementById('nav-username').textContent = '👋 ' + user.name.split(' ')[0];
+    document.getElementById('nav-username').style.display = 'inline';
+    document.getElementById('nav-logout-btn').style.display = 'inline';
+    document.getElementById('nav-login-btn').style.display = 'none';
+  } else {
+    document.getElementById('nav-username').style.display = 'none';
+    document.getElementById('nav-logout-btn').style.display = 'none';
+    document.getElementById('nav-login-btn').style.display = 'inline';
+  }
+}
+
+// ── MODAL ────────────────────────────────────────────────────
+function openModal() { document.getElementById('modal-overlay').classList.add('open'); clearMessages(); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); clearMessages(); }
+function closeModalOutside(e) { if (e.target === document.getElementById('modal-overlay')) closeModal(); }
+function switchTab(tab) {
+  document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  clearMessages();
+}
+function showError(msg) { const el = document.getElementById('form-error'); el.textContent = msg; el.style.display = 'block'; document.getElementById('form-success').style.display = 'none'; }
+function showSuccess(msg) { const el = document.getElementById('form-success'); el.textContent = msg; el.style.display = 'block'; document.getElementById('form-error').style.display = 'none'; }
+function clearMessages() { document.getElementById('form-error').style.display = 'none'; document.getElementById('form-success').style.display = 'none'; }
+
+async function handleLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!email || !password) { showError('Please fill in all fields'); return; }
+  try {
+    const data = await login(email, password);
+    showSuccess('Logged in successfully!');
+    setTimeout(() => { closeModal(); updateNavAuth(data.user); showToast('Welcome back, ' + data.user.name.split(' ')[0] + '! 👋'); }, 900);
+  } catch(e) { showError(e.message); }
+}
+
+async function handleRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const confirm = document.getElementById('reg-confirm').value;
+  if (!name || !email || !password || !confirm) { showError('Please fill in all fields'); return; }
+  if (password !== confirm) { showError('Passwords do not match!'); return; }
+  if (password.length < 6) { showError('Password must be at least 6 characters'); return; }
+  try {
+    const data = await register(name, email, password);
+    showSuccess('Account created successfully!');
+    setTimeout(() => { closeModal(); updateNavAuth(data.user); showToast('Welcome to MCW, ' + data.user.name.split(' ')[0] + '! 🎉'); }, 900);
+  } catch(e) { showError(e.message); }
+}
+
+// ── CART DRAWER ──────────────────────────────────────────────
+function openCart() { document.getElementById('cart-drawer').classList.add('open'); document.getElementById('cart-overlay').classList.add('open'); }
+function closeCart() { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); }
+
+// ── CATEGORY FILTER ──────────────────────────────────────────
+function filterByCategory(cat) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => { if (t.textContent.trim() === (cat || 'All')) t.classList.add('active'); });
+  loadProducts(cat);
+}
+
+// ── BLOG ─────────────────────────────────────────────────────
+function openBlogPost(slug) {
+  showToast('Blog post coming soon! 📝');
+}
+
+// ── CONFIG ───────────────────────────────────────────────────
+const API = 'http://localhost:3000/api';
+let cart = JSON.parse(localStorage.getItem('mcw_cart') || '[]');
+let currentUser = null;
+
+// ── PRODUCTS ─────────────────────────────────────────────────
+async function loadProducts(category = '') {
+  const grid = document.getElementById('products-grid');
+  if (!grid) return;
+  grid.innerHTML = '<div style="color:#555;font-size:14px;padding:40px;grid-column:1/-1;text-align:center;">Loading products...</div>';
+  try {
+    const url = category ? `${API}/products?category=${encodeURIComponent(category)}` : `${API}/products`;
+    const res = await fetch(url);
+    const products = await res.json();
+    if (!products.length) { grid.innerHTML = '<div style="color:#555;font-size:14px;padding:40px;grid-column:1/-1;text-align:center;">No products found.</div>'; return; }
+    grid.innerHTML = products.map(p => {
+      const isAffiliate = p.type === 'affiliate';
+      const platformColor = p.affiliatePlatform === 'amazon' ? '#ff9900' : p.affiliatePlatform === 'myntra' ? '#ff3f6c' : '#2874f0';
+      const platformName = p.affiliatePlatform === 'amazon' ? 'Amazon' : p.affiliatePlatform === 'myntra' ? 'Myntra' : 'Flipkart';
+      return `
+        <div class="product-card">
+          <div class="product-img">
+            ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
+            ${isAffiliate ? `<span class="product-tag" style="right:10px;left:auto;background:${platformColor};">${platformName}</span>` : ''}
+            ${p.image ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"/>` : ''}
+            <i class="ti ti-shirt" style="${p.image ? 'display:none' : ''}"></i>
+          </div>
+          <div class="product-info">
+            <div class="product-name">${p.name}</div>
+            <div class="product-cat">${p.category}</div>
+            <div class="product-row">
+              <div>
+                <span class="product-price">₹${p.price.toLocaleString()}</span>
+                ${p.originalPrice ? `<span style="font-size:12px;color:#555;text-decoration:line-through;margin-left:6px;">₹${p.originalPrice.toLocaleString()}</span>` : ''}
+              </div>
+              ${isAffiliate
+                ? `<a href="${p.affiliateUrl}" target="_blank" style="background:var(--gold);color:var(--dark);border:none;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;text-decoration:none;letter-spacing:0.5px;">BUY →</a>`
+                : `<button class="product-add" onclick="addToCart('${p._id}','${p.name.replace(/'/g,"\'")}',${p.price})">+</button>`
+              }
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    grid.innerHTML = '<div style="color:#e57373;font-size:14px;padding:40px;grid-column:1/-1;text-align:center;">Could not load products. Make sure server is running.</div>';
+  }
+}
+
+// ── AUTH ──────────────────────────────────────────────────────
+async function checkLogin() {
+  try {
+    const res = await fetch(`${API}/auth/me`, { credentials:'include' });
+    if (res.ok) { currentUser = await res.json(); updateNavAuth(currentUser); }
+  } catch(e) {}
+}
+async function login(email, password) {
+  const res = await fetch(`${API}/auth/login`, { method:'POST', credentials:'include', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password}) });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error);
+  currentUser = data.user; return data;
+}
+async function register(name, email, password) {
+  const res = await fetch(`${API}/auth/register`, { method:'POST', credentials:'include', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name,email,password}) });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error);
+  currentUser = data.user; return data;
+}
+async function logout() {
+  await fetch(`${API}/auth/logout`, { method:'POST', credentials:'include' });
+  currentUser = null; updateNavAuth(null); showToast('Logged out. See you soon! 👋');
+}
+
+// ── CART ──────────────────────────────────────────────────────
+function addToCart(id, name, price) {
+  const existing = cart.find(i => i.productId === id);
+  if (existing) existing.qty += 1;
+  else cart.push({ productId: id, name, price, qty: 1 });
+  localStorage.setItem('mcw_cart', JSON.stringify(cart));
+  renderCart(); showToast(name + ' added to cart! 🛍️');
+}
+function removeFromCart(id) {
+  cart = cart.filter(i => i.productId !== id);
+  localStorage.setItem('mcw_cart', JSON.stringify(cart));
+  renderCart();
+}
+function renderCart() {
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const countEl = document.getElementById('cart-count');
+  const totalEl = document.getElementById('cart-total');
+  const itemsEl = document.getElementById('cart-items');
+  if (countEl) countEl.textContent = count;
+  if (totalEl) totalEl.textContent = '₹' + total.toLocaleString();
+  if (itemsEl) itemsEl.innerHTML = cart.length === 0
+    ? '<p style="color:#555;text-align:center;padding:32px;">Your cart is empty</p>'
+    : cart.map(i => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div><div style="font-size:14px;font-weight:500;">${i.name}</div><div style="font-size:12px;color:#555;">Qty: ${i.qty} × ₹${i.price.toLocaleString()}</div></div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="color:var(--gold);font-weight:600;">₹${(i.price*i.qty).toLocaleString()}</span>
+            <button onclick="removeFromCart('${i.productId}')" style="background:#2a2a2a;color:#888;border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:14px;">×</button>
+          </div>
+        </div>`).join('');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  checkLogin();
+  loadProducts();
+  renderCart();
+});
+</script>
+</body>
+</html>

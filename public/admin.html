@@ -139,7 +139,6 @@
   <div class="nav-item" onclick="showPage('customers')"><i class="ti ti-users"></i> Customers</div>
   <div class="sidebar-section">Affiliate</div>
   <div class="nav-item" onclick="showPage('affiliate')"><i class="ti ti-link"></i> Affiliate Guide</div>
-  <div class="nav-item" onclick="showPage('amazon')"><i class="ti ti-brand-amazon"></i> Amazon Products</div>
   <div class="sidebar-section">Account</div>
   <div class="nav-item" onclick="showPage('password')"><i class="ti ti-lock"></i> Change Password</div>
   <div class="nav-item" onclick="goToSite()"><i class="ti ti-world"></i> View Site</div>
@@ -240,156 +239,6 @@
     </div>
   </div>
 
-
-  <!-- AMAZON PRODUCTS MANAGER -->
-  <div class="page" id="page-amazon">
-    <div class="page-title">Amazon Affiliate Products</div>
-    <div class="page-sub">Manage the 4 Amazon products shown at the top of your website. Edit prices, images, links anytime.</div>
-
-    <div id="amazon-alert"></div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;" id="amazon-cards">
-
-      <!-- Card 1 -->
-      <div class="table-box" style="padding:20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <h3 style="font-size:15px;color:var(--gold);">Product 1</h3>
-          <span style="background:#ff9900;color:#000;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;">AMAZON</span>
-        </div>
-        <div class="form-group"><label>Product Name</label><input type="text" id="amz1-name" value="Pinkmint Full Sleeve Casual Shirt"/></div>
-        <div class="form-group"><label>Category</label><input type="text" id="amz1-cat" value="Casual Shirt"/></div>
-        <div class="form-group"><label>Price (₹)</label><input type="number" id="amz1-price" value="299"/></div>
-        <div class="form-group"><label>Description</label><input type="text" id="amz1-desc" value="Classic collared shirt, premium cotton, perfect everyday wear."/></div>
-        <div class="form-group"><label>Image URL</label><input type="text" id="amz1-img" value="https://m.media-amazon.com/images/I/71y5G9STVOL._UL1500_.jpg"/></div>
-        <div class="form-group"><label>Amazon Affiliate Link</label><input type="text" id="amz1-url" value="https://www.amazon.in/dp/B0CW1ZG347?tag=mcwfashion-21"/></div>
-        <div class="form-group"><label>Badge</label>
-          <select id="amz1-badge">
-            <option value="HOT" selected>HOT</option>
-            <option value="NEW">NEW</option>
-            <option value="SALE">SALE</option>
-            <option value="TRENDING">TRENDING</option>
-          </select>
-        </div>
-        <button class="btn btn-gold" style="width:100%;" onclick="saveAmazonProduct(1)">Save Product 1</button>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="table-box" style="padding:20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <h3 style="font-size:15px;color:var(--gold);">Product 2</h3>
-          <span style="background:#ff9900;color:#000;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;">AMAZON</span>
-        </div>
-        <div class="form-group"><label>Product Name</label><input type="text" id="amz2-name" value="Campus Sutra Light Wash Denim Jacket"/></div>
-        <div class="form-group"><label>Category</label><input type="text" id="amz2-cat" value="Denim Jacket"/></div>
-        <div class="form-group"><label>Price (₹)</label><input type="number" id="amz2-price" value="499"/></div>
-        <div class="form-group"><label>Description</label><input type="text" id="amz2-desc" value="Trendy light wash denim, perfect layering for streetwear looks."/></div>
-        <div class="form-group"><label>Image URL</label><input type="text" id="amz2-img" value="https://m.media-amazon.com/images/I/81QNHPiPCbL._UL1500_.jpg"/></div>
-        <div class="form-group"><label>Amazon Affiliate Link</label><input type="text" id="amz2-url" value="https://www.amazon.in/dp/B0CV5J8712?tag=mcwfashion-21"/></div>
-        <div class="form-group"><label>Badge</label>
-          <select id="amz2-badge">
-            <option value="HOT">HOT</option>
-            <option value="NEW" selected>NEW</option>
-            <option value="SALE">SALE</option>
-            <option value="TRENDING">TRENDING</option>
-          </select>
-        </div>
-        <button class="btn btn-gold" style="width:100%;" onclick="saveAmazonProduct(2)">Save Product 2</button>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="table-box" style="padding:20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <h3 style="font-size:15px;color:var(--gold);">Product 3</h3>
-          <span style="background:#ff9900;color:#000;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;">AMAZON</span>
-        </div>
-        <div class="form-group"><label>Product Name</label><input type="text" id="amz3-name" value="Premium Men's Leather Jacket"/></div>
-        <div class="form-group"><label>Category</label><input type="text" id="amz3-cat" value="Jacket"/></div>
-        <div class="form-group"><label>Price (₹)</label><input type="number" id="amz3-price" value="999"/></div>
-        <div class="form-group"><label>Description</label><input type="text" id="amz3-desc" value="Bold design, quality build, perfect for casual and streetwear."/></div>
-        <div class="form-group"><label>Image URL</label><input type="text" id="amz3-img" value="https://m.media-amazon.com/images/I/61aXe6OIBPL._UL1500_.jpg"/></div>
-        <div class="form-group"><label>Amazon Affiliate Link</label><input type="text" id="amz3-url" value="https://www.amazon.in/dp/B0GXBD6TJB?tag=mcwfashion-21"/></div>
-        <div class="form-group"><label>Badge</label>
-          <select id="amz3-badge">
-            <option value="HOT">HOT</option>
-            <option value="NEW">NEW</option>
-            <option value="SALE">SALE</option>
-            <option value="TRENDING" selected>TRENDING</option>
-          </select>
-        </div>
-        <button class="btn btn-gold" style="width:100%;" onclick="saveAmazonProduct(3)">Save Product 3</button>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="table-box" style="padding:20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <h3 style="font-size:15px;color:var(--gold);">Product 4</h3>
-          <span style="background:#ff9900;color:#000;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;">AMAZON</span>
-        </div>
-        <div class="form-group"><label>Product Name</label><input type="text" id="amz4-name" value="Southee Bootcut Light Denim Jeans"/></div>
-        <div class="form-group"><label>Category</label><input type="text" id="amz4-cat" value="Denim Jeans"/></div>
-        <div class="form-group"><label>Price (₹)</label><input type="number" id="amz4-price" value="499"/></div>
-        <div class="form-group"><label>Description</label><input type="text" id="amz4-desc" value="Classic bootcut, light wash finish, comfortable all-day wear."/></div>
-        <div class="form-group"><label>Image URL</label><input type="text" id="amz4-img" value="https://m.media-amazon.com/images/I/61c6LpLEreL._UL1500_.jpg"/></div>
-        <div class="form-group"><label>Amazon Affiliate Link</label><input type="text" id="amz4-url" value="https://www.amazon.in/dp/B0GV8V5WNB?tag=mcwfashion-21"/></div>
-        <div class="form-group"><label>Badge</label>
-          <select id="amz4-badge">
-            <option value="HOT">HOT</option>
-            <option value="NEW">NEW</option>
-            <option value="SALE" selected>SALE</option>
-            <option value="TRENDING">TRENDING</option>
-          </select>
-        </div>
-        <button class="btn btn-gold" style="width:100%;" onclick="saveAmazonProduct(4)">Save Product 4</button>
-      </div>
-
-    </div>
-
-    <!-- Add New Amazon Product -->
-    <div style="margin-top:32px;">
-      <div class="table-box" style="padding:24px;">
-        <h3 style="color:var(--gold);margin-bottom:20px;font-size:16px;"><i class="ti ti-plus"></i> Add New Amazon Product (Product 5, 6...)</h3>
-        <p style="font-size:13px;color:var(--gray);margin-bottom:20px;">Adding a new product here adds it to your database AND shows it on your website automatically!</p>
-        <div class="form-grid">
-          <div class="form-group"><label>Product Name</label><input type="text" id="new-amz-name" placeholder="e.g. Nike Dri-FIT T-Shirt"/></div>
-          <div class="form-group"><label>Category</label><input type="text" id="new-amz-cat" placeholder="e.g. T-Shirts"/></div>
-          <div class="form-group"><label>Price (₹)</label><input type="number" id="new-amz-price" placeholder="999"/></div>
-          <div class="form-group"><label>Original Price (₹) — for strikethrough</label><input type="number" id="new-amz-original" placeholder="1499"/></div>
-          <div class="form-group"><label>Badge</label>
-            <select id="new-amz-badge">
-              <option value="">None</option>
-              <option value="Hot">Hot</option>
-              <option value="New">New</option>
-              <option value="Sale">Sale</option>
-              <option value="Trending">Trending</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Platform</label>
-            <select id="new-amz-platform">
-              <option value="amazon">Amazon India</option>
-              <option value="myntra">Myntra</option>
-              <option value="flipkart">Flipkart</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Commission %</label><input type="text" id="new-amz-commission" placeholder="9%"/></div>
-          <div class="form-group"><label>Stock</label><input type="number" id="new-amz-stock" value="0"/></div>
-          <div class="form-group full"><label>Product Description</label><textarea id="new-amz-desc" placeholder="Brief description of the product..."></textarea></div>
-          <div class="form-group full"><label>Product Image URL (from Amazon)</label><input type="text" id="new-amz-img" placeholder="https://m.media-amazon.com/images/..."/></div>
-          <div class="form-group full"><label>Affiliate Link (your unique Amazon/Myntra/Flipkart link)</label><input type="text" id="new-amz-url" placeholder="https://www.amazon.in/dp/XXXXXXXX?tag=mcwfashion-21"/></div>
-        </div>
-        <button class="btn btn-gold" style="padding:12px 32px;margin-top:8px;" onclick="addNewAmazonProduct()"><i class="ti ti-plus"></i> Add to Website</button>
-      </div>
-    </div>
-
-    <!-- How to get Amazon image URL -->
-    <div class="affiliate-guide" style="margin-top:24px;">
-      <h3>📸 How to get Product Image URL from Amazon</h3>
-      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Go to Amazon product page</h4><p>Open any product on Amazon India that you want to add to your website.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Right-click on the product image</h4><p>Right-click on the main product photo → click "Copy image address" or "Copy image link".</p></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Paste in Image URL box above</h4><p>Paste the copied link in the "Product Image URL" field above. It usually starts with <strong>https://m.media-amazon.com/images/...</strong></p></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-text"><h4>Get your affiliate link</h4><p>Go to Amazon Associates → SiteStripe bar at the top of Amazon → click "Text" or "Image+Text" → copy the link with your tag <strong>mcwfashion-21</strong></p></div></div>
-    </div>
-  </div>
-
 </div><!-- end main -->
 </div><!-- end admin panel -->
 
@@ -409,8 +258,19 @@
       <div class="form-group"><label>Product Name</label><input type="text" id="p-name" placeholder="e.g. Urban Drop Tee"/></div>
       <div class="form-group"><label>Category</label>
         <select id="p-category">
-          <option>T-Shirts</option><option>Jackets</option><option>Hoodies</option>
-          <option>Joggers</option><option>Shorts</option><option>Sneakers</option><option>Accessories</option>
+          <option>T-Shirts</option>
+          <option>Jackets</option>
+          <option>Hoodies</option>
+          <option>Joggers</option>
+          <option>Pants</option>
+          <option>Jeans</option>
+          <option>Formal Pants</option>
+          <option>Shorts</option>
+          <option>Sneakers</option>
+          <option>Shoes</option>
+          <option>Accessories</option>
+          <option>Watches</option>
+          <option>Bags</option>
         </select>
       </div>
       <div class="form-group"><label>Price (₹)</label><input type="number" id="p-price" placeholder="899"/></div>
@@ -424,7 +284,18 @@
 
       <!-- AFFILIATE FIELDS -->
       <div class="form-group" id="aff-platform-group" style="display:none;"><label>Platform</label>
-        <select id="p-platform"><option value="amazon">Amazon India</option><option value="myntra">Myntra</option><option value="flipkart">Flipkart</option></select>
+        <select id="p-platform" onchange="toggleCustomPlatform(this.value)">
+          <option value="amazon">Amazon India</option>
+          <option value="myntra">Myntra</option>
+          <option value="flipkart">Flipkart</option>
+          <option value="meesho">Meesho</option>
+          <option value="ajio">AJIO</option>
+          <option value="nykaa">Nykaa Fashion</option>
+          <option value="custom">Custom / Other</option>
+        </select>
+      </div>
+      <div class="form-group" id="aff-custom-platform-group" style="display:none;"><label>Custom Platform Name</label>
+        <input type="text" id="p-custom-platform" placeholder="e.g. Urbanic, Bewakoof, Snitch..."/>
       </div>
       <div class="form-group" id="aff-commission-group" style="display:none;"><label>Commission %</label><input type="text" id="p-commission" placeholder="e.g. 9%"/></div>
       <div class="form-group full" id="aff-url-group" style="display:none;"><label>Affiliate Link (your unique URL from Amazon/Myntra/Flipkart)</label><input type="text" id="p-url" placeholder="https://www.amazon.in/dp/...?tag=yourtag-21"/></div>
@@ -553,6 +424,11 @@ async function loadProducts() {
     </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:32px;">No products yet — add your first one!</td></tr>';
 }
 
+function toggleCustomPlatform(val) {
+  const customGroup = document.getElementById('aff-custom-platform-group');
+  customGroup.style.display = val === 'custom' ? 'block' : 'none';
+}
+
 function openProductModal(type = 'own') {
   document.getElementById('p-id').value = '';
   document.getElementById('p-name').value = '';
@@ -565,6 +441,8 @@ function openProductModal(type = 'own') {
   document.getElementById('p-stock').value = '100';
   document.getElementById('modal-title').textContent = 'Add New Product';
   document.getElementById('modal-alert').innerHTML = '';
+  document.getElementById('aff-custom-platform-group').style.display = 'none';
+  document.getElementById('p-custom-platform').value = '';
   setProductType(type);
   document.getElementById('product-modal').classList.add('open');
 }
@@ -596,7 +474,17 @@ async function editProduct(id) {
   document.getElementById('p-commission').value  = p.affiliateCommission || '';
   document.getElementById('modal-title').textContent = 'Edit Product';
   setProductType(p.type || 'own');
-  if (p.affiliatePlatform) document.getElementById('p-platform').value = p.affiliatePlatform;
+  if (p.affiliatePlatform) {
+    const knownPlatforms = ['amazon','myntra','flipkart','meesho','ajio','nykaa'];
+    if (knownPlatforms.includes(p.affiliatePlatform)) {
+      document.getElementById('p-platform').value = p.affiliatePlatform;
+      document.getElementById('aff-custom-platform-group').style.display = 'none';
+    } else {
+      document.getElementById('p-platform').value = 'custom';
+      document.getElementById('p-custom-platform').value = p.affiliatePlatform;
+      document.getElementById('aff-custom-platform-group').style.display = 'block';
+    }
+  }
   document.getElementById('product-modal').classList.add('open');
 }
 
@@ -614,7 +502,9 @@ async function saveProduct() {
     image: document.getElementById('p-image').value,
     type,
     ...(type === 'affiliate' ? {
-      affiliatePlatform: document.getElementById('p-platform').value,
+      affiliatePlatform: document.getElementById('p-platform').value === 'custom'
+        ? document.getElementById('p-custom-platform').value.toLowerCase().trim()
+        : document.getElementById('p-platform').value,
       affiliateUrl: document.getElementById('p-url').value,
       affiliateCommission: document.getElementById('p-commission').value
     } : {})
@@ -681,65 +571,6 @@ function showAlert(id, msg, type) {
   if (!el) return;
   el.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
   setTimeout(() => { el.innerHTML = ''; }, 4000);
-}
-
-// ── AMAZON PRODUCTS MANAGER ──────────────────────────────────
-function saveAmazonProduct(num) {
-  const name     = document.getElementById(`amz${num}-name`).value.trim();
-  const cat      = document.getElementById(`amz${num}-cat`).value.trim();
-  const price    = document.getElementById(`amz${num}-price`).value;
-  const desc     = document.getElementById(`amz${num}-desc`).value.trim();
-  const img      = document.getElementById(`amz${num}-img`).value.trim();
-  const url      = document.getElementById(`amz${num}-url`).value.trim();
-  const badge    = document.getElementById(`amz${num}-badge`).value;
-  if (!name || !price || !url) { showAlert('amazon-alert', '❌ Name, price and link are required!', 'error'); return; }
-  // Save to localStorage as reference
-  const products = JSON.parse(localStorage.getItem('mcw_amazon_products') || '{}');
-  products[num] = { name, cat, price, desc, img, url, badge };
-  localStorage.setItem('mcw_amazon_products', JSON.stringify(products));
-  showAlert('amazon-alert', `✅ Product ${num} saved! Now update your index.html with these details.`, 'success');
-  // Show instructions
-  const alertEl = document.getElementById('amazon-alert');
-  alertEl.innerHTML += `<div class="alert alert-success" style="margin-top:8px;">
-    <strong>To update your live website:</strong><br>
-    1. Copy these details<br>
-    2. Open your index.html in Notepad<br>
-    3. Find Product ${num} section and update the values<br>
-    4. Commit and push via GitHub Desktop<br>
-    OR — use the "Add New Product" section below to add it to your database directly!
-  </div>`;
-}
-
-async function addNewAmazonProduct() {
-  const name       = document.getElementById('new-amz-name').value.trim();
-  const category   = document.getElementById('new-amz-cat').value.trim();
-  const price      = parseFloat(document.getElementById('new-amz-price').value);
-  const original   = parseFloat(document.getElementById('new-amz-original').value) || null;
-  const tag        = document.getElementById('new-amz-badge').value;
-  const platform   = document.getElementById('new-amz-platform').value;
-  const commission = document.getElementById('new-amz-commission').value;
-  const stock      = parseInt(document.getElementById('new-amz-stock').value) || 0;
-  const desc       = document.getElementById('new-amz-desc').value.trim();
-  const image      = document.getElementById('new-amz-img').value.trim();
-  const url        = document.getElementById('new-amz-url').value.trim();
-
-  if (!name || !price || !url) { showAlert('amazon-alert', '❌ Name, price and affiliate link are required!', 'error'); return; }
-
-  const body = { name, category, price, originalPrice: original, tag, type: 'affiliate',
-    affiliatePlatform: platform, affiliateUrl: url, affiliateCommission: commission,
-    stock, description: desc, image, active: true };
-
-  try {
-    const res  = await fetch(`${API}/products`, { method:'POST', credentials:'include', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-    const data = await res.json();
-    if (!res.ok) { showAlert('amazon-alert', '❌ Error: ' + data.error, 'error'); return; }
-    showAlert('amazon-alert', '✅ Product added to your database! It will now show in the MCW Originals section on your website.', 'success');
-    // Clear fields
-    ['name','cat','price','original','desc','img','url','commission'].forEach(f => {
-      const el = document.getElementById(`new-amz-${f}`);
-      if (el) el.value = '';
-    });
-  } catch(e) { showAlert('amazon-alert', '❌ Server error: ' + e.message, 'error'); }
 }
 
 // Auto-check if already logged in

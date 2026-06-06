@@ -140,6 +140,7 @@
   <div class="sidebar-section">Affiliate</div>
   <div class="nav-item" onclick="showPage('affiliate')"><i class="ti ti-link"></i> Affiliate Guide</div>
   <div class="sidebar-section">Account</div>
+  <div class="nav-item" onclick="showPage('password')"><i class="ti ti-lock"></i> Change Password</div>
   <div class="nav-item" onclick="goToSite()"><i class="ti ti-world"></i> View Site</div>
   <div class="nav-item" onclick="adminLogout()"><i class="ti ti-logout"></i> Logout</div>
 </div>
@@ -304,6 +305,46 @@ async function adminLogin() {
     loadDashboard();
   } catch(e) { alertEl.innerHTML = `<div class="alert alert-error">Server not running. Start with: node server.js</div>`; }
 }
+async function changePassword() {
+  const current = document.getElementById('current-password').value;
+  const newPass = document.getElementById('new-password').value;
+  const confirm = document.getElementById('confirm-password').value;
+  const alertEl = document.getElementById('password-alert');
+
+  if (!current || !newPass || !confirm) {
+    alertEl.innerHTML = '<div class="alert alert-error">Please fill in all fields!</div>';
+    return;
+  }
+  if (newPass !== confirm) {
+    alertEl.innerHTML = '<div class="alert alert-error">New passwords do not match!</div>';
+    return;
+  }
+  if (newPass.length < 6) {
+    alertEl.innerHTML = '<div class="alert alert-error">New password must be at least 6 characters!</div>';
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API}/admin/change-password`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentPassword: current, newPassword: newPass })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alertEl.innerHTML = `<div class="alert alert-error">${data.error}</div>`;
+    } else {
+      alertEl.innerHTML = '<div class="alert alert-success">✅ Password changed successfully!</div>';
+      document.getElementById('current-password').value = '';
+      document.getElementById('new-password').value = '';
+      document.getElementById('confirm-password').value = '';
+    }
+  } catch (err) {
+    alertEl.innerHTML = '<div class="alert alert-error">Something went wrong. Try again!</div>';
+  }
+}
+
 async function adminLogout() {
   await fetch(`${API}/auth/logout`, { method:'POST', credentials:'include' });
   location.reload();

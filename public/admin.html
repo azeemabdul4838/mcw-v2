@@ -285,7 +285,7 @@
 </div>
 
 <script>
-const API = 'http://localhost:3000/api';
+const API = 'https://mcw-v2.onrender.com/api';
 let adminUser = null;
 
 // ── LOGIN ─────────────────────────────────────────────────────
@@ -308,7 +308,7 @@ async function adminLogout() {
   await fetch(`${API}/auth/logout`, { method:'POST', credentials:'include' });
   location.reload();
 }
-function goToSite() { window.open('http://localhost:3000','_blank'); }
+function goToSite() { window.open('https://mcw-v2.onrender.com','_blank'); }
 
 // ── NAV ───────────────────────────────────────────────────────
 function showPage(name) {

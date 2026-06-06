@@ -300,10 +300,23 @@
   <div class="categories-grid">
     <div class="cat-card" onclick="filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
     <div class="cat-card" onclick="filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-    <div class="cat-card" onclick="filterByCategory('Joggers')"><i class="ti ti-run"></i><span>Joggers</span></div>
     <div class="cat-card" onclick="filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+    <div class="cat-card" onclick="showPantsMenu(event)"><i class="ti ti-arrow-narrow-down"></i><span>Pants ▾</span></div>
+    <div class="cat-card" onclick="filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
     <div class="cat-card" onclick="filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
     <div class="cat-card" onclick="filterByCategory('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
+
+    <!-- Pants Submenu -->
+    <div id="pants-submenu" style="display:none;grid-column:1/-1;background:var(--dark3);border:1px solid var(--border);border-radius:12px;padding:16px 20px;flex-wrap:wrap;gap:8px;align-items:center;">
+      <span style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-right:8px;">Choose Style:</span>
+      <button class="tab" onclick="filterByCategory('Bootcut')"><i class="ti ti-arrow-narrow-down"></i> Bootcut</button>
+      <button class="tab" onclick="filterByCategory('Baggy')"><i class="ti ti-arrow-narrow-down"></i> Baggy</button>
+      <button class="tab" onclick="filterByCategory('Straight')"><i class="ti ti-minus"></i> Straight</button>
+      <button class="tab" onclick="filterByCategory('Tracks')"><i class="ti ti-run"></i> Stylish Tracks</button>
+      <button class="tab" onclick="filterByCategory('Formals')"><i class="ti ti-tie"></i> Formals</button>
+      <button class="tab" onclick="filterByCategory('Joggers')"><i class="ti ti-walk"></i> Joggers</button>
+      <button style="background:transparent;border:none;color:#666;cursor:pointer;font-size:18px;margin-left:8px;" onclick="hidePantsMenu()">✕</button>
+    </div>
   </div>
 </section>
 
@@ -408,7 +421,8 @@
     <button class="tab" onclick="filterByCategory('T-Shirts')">T-Shirts</button>
     <button class="tab" onclick="filterByCategory('Jackets')">Jackets</button>
     <button class="tab" onclick="filterByCategory('Hoodies')">Hoodies</button>
-    <button class="tab" onclick="filterByCategory('Joggers')">Joggers</button>
+    <button class="tab" onclick="showPantsMenu(event)">Pants ▾</button>
+    <button class="tab" onclick="filterByCategory('Shoes')">Shoes</button>
     <button class="tab" onclick="filterByCategory('Accessories')">Accessories</button>
   </div>
   <div class="products-grid" id="products-grid">
@@ -427,11 +441,10 @@
 <!-- ── OFFER BANNER ── -->
 <div class="offer-banner" id="deals">
   <div class="offer-text">
-    <h3>FLAT 30% OFF — LIMITED TIME</h3>
-    <p>Use code at checkout. Today only. Free shipping above ₹999.</p>
+    <h3>FREE SHIPPING ON MOST ORDERS</h3>
+    <p>Easy 15-day returns. 100% authentic products. Shop with confidence.</p>
   </div>
-  <div class="offer-code">MCW30</div>
-  <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Grab the Deal</button>
+  <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Now</button>
 </div>
 
 <!-- ── BLOG SECTION ── -->
@@ -487,7 +500,7 @@
 <!-- ── FEATURES ── -->
 <section class="section" style="padding-top:40px;">
   <div class="features-grid">
-    <div class="feat"><i class="ti ti-truck-delivery"></i><h4>Free Delivery</h4><p>On orders above ₹999</p></div>
+    <div class="feat"><i class="ti ti-truck-delivery"></i><h4>Free Delivery</h4><p>On most orders</p></div>
     <div class="feat"><i class="ti ti-refresh"></i><h4>Easy Returns</h4><p>15-day hassle-free return</p></div>
     <div class="feat"><i class="ti ti-shield-check"></i><h4>100% Authentic</h4><p>Quality guaranteed</p></div>
     <div class="feat"><i class="ti ti-headset"></i><h4>24/7 Support</h4><p>We're always here</p></div>
@@ -507,7 +520,8 @@
         <li onclick="filterByCategory('T-Shirts')">T-Shirts</li>
         <li onclick="filterByCategory('Jackets')">Jackets</li>
         <li onclick="filterByCategory('Hoodies')">Hoodies</li>
-        <li onclick="filterByCategory('Joggers')">Joggers</li>
+        <li onclick="showPantsMenu(event)">Pants</li>
+        <li onclick="filterByCategory('Shoes')">Shoes</li>
         <li onclick="filterByCategory('Accessories')">Accessories</li>
       </ul>
     </div>
@@ -600,6 +614,19 @@ function openCart() { document.getElementById('cart-drawer').classList.add('open
 function closeCart() { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); }
 
 // ── CATEGORY FILTER ──────────────────────────────────────────
+function showPantsMenu(event) {
+  if(event) event.stopPropagation();
+  const menu = document.getElementById('pants-submenu');
+  const isOpen = menu.style.display === 'flex';
+  menu.style.display = isOpen ? 'none' : 'flex';
+  if(!isOpen) {
+    document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+  }
+}
+function hidePantsMenu() {
+  document.getElementById('pants-submenu').style.display = 'none';
+}
+
 function filterByCategory(cat) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => { if (t.textContent.trim() === (cat || 'All')) t.classList.add('active'); });

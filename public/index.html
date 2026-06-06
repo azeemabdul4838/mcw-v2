@@ -3,22 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MCW — Men Clothing Wear | Best Men's Fashion, Streetwear & Deals India 2026</title>
-  <meta name="description" content="Shop the best men's streetwear, casual shirts, jackets, jeans and more. Handpicked fashion deals from Amazon, Flipkart & Myntra with honest reviews and style guides."/>
-  <meta name="keywords" content="men clothing india, men streetwear, men jackets online, men jeans amazon, men fashion deals, MCW men clothing wear"/>
-  <meta name="author" content="MCW — Men Clothing Wear"/>
-  <meta name="robots" content="index, follow"/>
-  <link rel="canonical" href="https://mcw-v2.onrender.com/"/>
-  <!-- Open Graph for WhatsApp/Facebook sharing -->
-  <meta property="og:title" content="MCW — Men Clothing Wear | Best Men's Fashion India"/>
-  <meta property="og:description" content="Handpicked men's fashion deals from Amazon, Flipkart & Myntra. Style guides, buying guides and honest reviews."/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://mcw-v2.onrender.com/"/>
-  <meta property="og:image" content="https://mcw-v2.onrender.com/og-image.jpg"/>
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="MCW — Men Clothing Wear"/>
-  <meta name="twitter:description" content="Best men's fashion deals, style guides and streetwear reviews in India."/>
+  <title>MCW — Men Clothing Wear</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
@@ -199,75 +184,8 @@
     .footer-bottom p { font-size:12px; color:#444; }
 
     /* ── TOAST ── */
-    .toast { position:fixed; bottom:24px; right:80px; background:var(--dark2); color:var(--gold); border:1px solid var(--border); padding:14px 22px; border-radius:10px; font-size:14px; z-index:99999; animation:fadeUp 0.3s ease; }
+    .toast { position:fixed; bottom:24px; right:24px; background:var(--dark2); color:var(--gold); border:1px solid var(--border); padding:14px 22px; border-radius:10px; font-size:14px; z-index:99999; animation:fadeUp 0.3s ease; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-    /* ── COOKIE CONSENT ── */
-    .cookie-bar { position:fixed; bottom:0; left:0; right:0; background:#111; border-top:1px solid var(--border); padding:16px 40px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; z-index:99998; transform:translateY(100%); transition:transform 0.4s ease; }
-    .cookie-bar.show { transform:translateY(0); }
-    .cookie-bar p { font-size:13px; color:#999; line-height:1.6; max-width:700px; }
-    .cookie-bar a { color:var(--gold); }
-    .cookie-btns { display:flex; gap:10px; flex-shrink:0; }
-    .cookie-accept { background:var(--gold); color:var(--dark); border:none; padding:9px 24px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; }
-    .cookie-decline { background:transparent; color:#666; border:1px solid #333; padding:9px 18px; border-radius:6px; font-size:13px; cursor:pointer; }
-
-    /* ── BACK TO TOP ── */
-    .back-to-top { position:fixed; bottom:24px; right:24px; width:44px; height:44px; background:var(--gold); color:var(--dark); border:none; border-radius:50%; font-size:20px; cursor:pointer; z-index:9997; display:none; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(232,184,109,0.3); transition:all 0.2s; }
-    .back-to-top.show { display:flex; }
-    .back-to-top:hover { transform:translateY(-3px); }
-
-    /* ── WHATSAPP BUTTON ── */
-    .whatsapp-btn { position:fixed; bottom:80px; right:24px; width:50px; height:50px; background:#25d366; color:#fff; border:none; border-radius:50%; font-size:26px; cursor:pointer; z-index:9997; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(37,211,102,0.4); transition:all 0.2s; text-decoration:none; }
-    .whatsapp-btn:hover { transform:scale(1.1); }
-
-    /* ── SEARCH BAR ── */
-    .search-bar-wrap { padding:0 40px 32px; }
-    .search-bar { display:flex; align-items:center; gap:12px; background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:12px 20px; transition:border-color 0.2s; }
-    .search-bar:focus-within { border-color:var(--gold); }
-    .search-bar i { font-size:20px; color:#555; }
-    .search-bar input { flex:1; background:transparent; border:none; outline:none; font-size:14px; color:var(--white); font-family:'DM Sans',sans-serif; }
-    .search-bar input::placeholder { color:#555; }
-    .search-results { background:var(--dark2); border:1px solid var(--border); border-radius:12px; margin-top:8px; display:none; max-height:300px; overflow-y:auto; }
-    .search-result-item { padding:12px 20px; display:flex; align-items:center; gap:12px; cursor:pointer; border-bottom:1px solid var(--border); transition:background 0.2s; }
-    .search-result-item:hover { background:var(--dark3); }
-    .search-result-item:last-child { border-bottom:none; }
-
-    /* ── NEWSLETTER ── */
-    .newsletter-section { background:linear-gradient(135deg,#1a1208,#111); border:1px solid rgba(232,184,109,0.2); border-radius:20px; margin:0 40px 40px; padding:48px 40px; text-align:center; }
-    .newsletter-section h3 { font-family:'Bebas Neue',sans-serif; font-size:40px; color:var(--gold); letter-spacing:2px; margin-bottom:8px; }
-    .newsletter-section p { font-size:14px; color:#888; margin-bottom:28px; }
-    .newsletter-form { display:flex; gap:12px; max-width:480px; margin:0 auto; }
-    .newsletter-form input { flex:1; background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:13px 18px; font-size:14px; color:var(--white); outline:none; font-family:'DM Sans',sans-serif; transition:border-color 0.2s; }
-    .newsletter-form input:focus { border-color:var(--gold); }
-    .newsletter-form button { background:var(--gold); color:var(--dark); border:none; padding:13px 28px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; letter-spacing:1px; white-space:nowrap; }
-
-    /* ── SOCIAL LINKS ── */
-    .social-links { display:flex; gap:12px; }
-    .social-link { width:38px; height:38px; border-radius:50%; background:var(--dark3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:#666; font-size:18px; text-decoration:none; transition:all 0.2s; }
-    .social-link:hover { background:var(--gold); color:var(--dark); border-color:var(--gold); }
-
-    /* ── DEAL OF THE DAY ── */
-    .deal-banner { background:linear-gradient(135deg,#1a0808,#2a1008); border:1px solid rgba(229,115,115,0.3); border-radius:16px; padding:28px 40px; margin:0 40px 40px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
-    .deal-badge { background:#e57373; color:#fff; font-size:10px; font-weight:700; padding:4px 12px; border-radius:4px; letter-spacing:2px; text-transform:uppercase; display:inline-block; margin-bottom:8px; }
-    .deal-title { font-family:'Bebas Neue',sans-serif; font-size:28px; color:#fff; letter-spacing:1px; }
-    .deal-sub { font-size:13px; color:#aaa; margin-top:4px; }
-    .deal-timer { display:flex; gap:12px; align-items:center; }
-    .timer-block { background:rgba(0,0,0,0.4); border:1px solid #333; border-radius:8px; padding:10px 16px; text-align:center; min-width:60px; }
-    .timer-num { font-family:'Bebas Neue',sans-serif; font-size:28px; color:#e57373; line-height:1; }
-    .timer-label { font-size:10px; color:#666; letter-spacing:1px; text-transform:uppercase; }
-
-    /* ── SKELETON LOADING ── */
-    .skeleton { background:linear-gradient(90deg,var(--dark2) 25%,var(--dark3) 50%,var(--dark2) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:8px; }
-    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-    .skeleton-card { background:var(--dark2); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
-    .skeleton-img { height:180px; }
-    .skeleton-line { height:14px; margin:16px 16px 8px; }
-    .skeleton-line-sm { height:10px; margin:0 16px 16px; width:60%; }
-
-    /* ── AFFILIATE DISCLOSURE ── */
-    .disclosure-bar { background:rgba(232,184,109,0.05); border:1px solid rgba(232,184,109,0.15); border-radius:8px; padding:10px 20px; margin:0 40px 24px; display:flex; align-items:center; gap:10px; }
-    .disclosure-bar i { color:var(--gold); font-size:16px; flex-shrink:0; }
-    .disclosure-bar p { font-size:12px; color:#666; line-height:1.5; }
 
     /* ── RESPONSIVE ── */
     @media(max-width:768px) {
@@ -304,25 +222,6 @@
     </button>
   </div>
 </nav>
-
-<!-- ── COOKIE CONSENT ── -->
-<div class="cookie-bar" id="cookie-bar">
-  <p>🍪 We use cookies to improve your experience and show relevant ads. By continuing, you agree to our use of cookies and <a href="#">Privacy Policy</a>. This site contains affiliate links — we may earn a commission at no extra cost to you.</p>
-  <div class="cookie-btns">
-    <button class="cookie-accept" onclick="acceptCookies()">Accept All</button>
-    <button class="cookie-decline" onclick="declineCookies()">Decline</button>
-  </div>
-</div>
-
-<!-- ── WHATSAPP BUTTON ── -->
-<a class="whatsapp-btn" href="https://wa.me/91XXXXXXXXXX" target="_blank" title="Chat on WhatsApp">
-  <i class="ti ti-brand-whatsapp"></i>
-</a>
-
-<!-- ── BACK TO TOP ── -->
-<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
-  <i class="ti ti-arrow-up"></i>
-</button>
 
 <!-- ── LOGIN MODAL ── -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
@@ -390,41 +289,6 @@
 <div class="ad-slot ad-slot-banner">
   <!-- Google AdSense Banner Ad — Replace with actual AdSense code after approval -->
   <span>Advertisement</span>
-</div>
-
-<!-- ── DEAL OF THE DAY ── -->
-<div class="deal-banner">
-  <div>
-    <div class="deal-badge">⚡ Deal of the Day</div>
-    <div class="deal-title">UP TO 50% OFF ON TOP PICKS</div>
-    <div class="deal-sub">Limited time deals on Amazon, Flipkart & Myntra. Don't miss out!</div>
-  </div>
-  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <div class="deal-timer">
-      <div class="timer-block"><div class="timer-num" id="timer-h">00</div><div class="timer-label">Hours</div></div>
-      <div style="font-size:24px;color:#555;">:</div>
-      <div class="timer-block"><div class="timer-num" id="timer-m">00</div><div class="timer-label">Mins</div></div>
-      <div style="font-size:24px;color:#555;">:</div>
-      <div class="timer-block"><div class="timer-num" id="timer-s">00</div><div class="timer-label">Secs</div></div>
-    </div>
-    <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Deals</button>
-  </div>
-</div>
-
-<!-- ── SEARCH BAR ── -->
-<div class="search-bar-wrap">
-  <div class="search-bar">
-    <i class="ti ti-search"></i>
-    <input type="text" id="search-input" placeholder="Search for jackets, t-shirts, jeans..." oninput="handleSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()"/>
-    <button onclick="closeSearch()" style="background:none;border:none;color:#555;cursor:pointer;font-size:18px;display:none;" id="search-clear">✕</button>
-  </div>
-  <div class="search-results" id="search-results"></div>
-</div>
-
-<!-- ── AFFILIATE DISCLOSURE ── -->
-<div class="disclosure-bar">
-  <i class="ti ti-info-circle"></i>
-  <p><strong style="color:var(--gold);">Affiliate Disclosure:</strong> MCW contains affiliate links. When you click and buy through our links, we may earn a small commission at no extra cost to you. This helps us keep the site running and find the best deals for you.</p>
 </div>
 
 <!-- ── CATEGORIES ── -->
@@ -643,29 +507,12 @@
   </div>
 </section>
 
-<!-- ── NEWSLETTER ── -->
-<div class="newsletter-section">
-  <h3>GET EXCLUSIVE DEALS</h3>
-  <p>Subscribe for the best men's fashion deals, style tips and discount codes straight to your inbox.</p>
-  <div class="newsletter-form">
-    <input type="email" id="newsletter-email" placeholder="Enter your email address..."/>
-    <button onclick="subscribeNewsletter()">Subscribe Free</button>
-  </div>
-  <p style="font-size:11px;color:#555;margin-top:12px;">No spam. Unsubscribe anytime. 100% free.</p>
-</div>
-
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-grid">
     <div>
       <div class="footer-brand">MCW</div>
       <p class="footer-tagline">Men Clothing Wear — bold fits for the modern man. Premium streetwear & fashion guides.</p>
-      <div class="social-links" style="margin-top:16px;">
-        <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram"><i class="ti ti-brand-instagram"></i></a>
-        <a href="https://youtube.com" target="_blank" class="social-link" title="YouTube"><i class="ti ti-brand-youtube"></i></a>
-        <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="social-link" title="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
-        <a href="https://twitter.com" target="_blank" class="social-link" title="Twitter"><i class="ti ti-brand-twitter"></i></a>
-      </div>
     </div>
     <div>
       <h4>Shop</h4>
@@ -800,7 +647,7 @@ let currentUser = null;
 async function loadProducts(category = '') {
   const grid = document.getElementById('products-grid');
   if (!grid) return;
-  showSkeletons('products-grid', 4);
+  grid.innerHTML = '<div style="color:#555;font-size:14px;padding:40px;grid-column:1/-1;text-align:center;">Loading products...</div>';
   try {
     const url = category ? `${API}/products?category=${encodeURIComponent(category)}` : `${API}/products`;
     const res = await fetch(url);
@@ -904,124 +751,11 @@ function showToast(msg) {
   setTimeout(() => t.remove(), 3000);
 }
 
-// ── COOKIE CONSENT ───────────────────────────────────────────
-function acceptCookies() {
-  localStorage.setItem('mcw_cookies', 'accepted');
-  document.getElementById('cookie-bar').classList.remove('show');
-}
-function declineCookies() {
-  localStorage.setItem('mcw_cookies', 'declined');
-  document.getElementById('cookie-bar').classList.remove('show');
-}
-
-// ── SEARCH ───────────────────────────────────────────────────
-let allProducts = [];
-async function handleSearch(query) {
-  const resultsEl = document.getElementById('search-results');
-  const clearBtn  = document.getElementById('search-clear');
-  clearBtn.style.display = query ? 'block' : 'none';
-  if (!query.trim()) { resultsEl.style.display = 'none'; return; }
-  if (!allProducts.length) {
-    try {
-      const res = await fetch(`${API}/products`);
-      allProducts = await res.json();
-    } catch(e) { return; }
-  }
-  const filtered = allProducts.filter(p =>
-    p.name.toLowerCase().includes(query.toLowerCase()) ||
-    p.category.toLowerCase().includes(query.toLowerCase())
-  ).slice(0, 6);
-  if (!filtered.length) {
-    resultsEl.style.display = 'block';
-    resultsEl.innerHTML = '<div style="padding:16px 20px;color:#555;font-size:13px;">No products found for "' + query + '"</div>';
-    return;
-  }
-  resultsEl.style.display = 'block';
-  resultsEl.innerHTML = filtered.map(p => `
-    <div class="search-result-item" onclick="filterByCategory('${p.category}');closeSearch();">
-      <i class="ti ti-shirt" style="color:var(--gold);font-size:20px;"></i>
-      <div>
-        <div style="font-size:14px;font-weight:500;">${p.name}</div>
-        <div style="font-size:12px;color:#555;">${p.category} • ₹${p.price.toLocaleString()}</div>
-      </div>
-      <span style="margin-left:auto;font-size:12px;color:var(--gold);">${p.type === 'affiliate' ? '🔗' : '🛍️'}</span>
-    </div>`).join('');
-}
-function closeSearch() {
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-results').style.display = 'none';
-  document.getElementById('search-clear').style.display = 'none';
-}
-
-// ── COUNTDOWN TIMER ───────────────────────────────────────────
-function startTimer() {
-  // Set countdown to end of day
-  const now  = new Date();
-  const end  = new Date();
-  end.setHours(23, 59, 59, 0);
-  function tick() {
-    const diff = end - new Date();
-    if (diff <= 0) { end.setDate(end.getDate() + 1); }
-    const h = String(Math.floor(diff / 3600000)).padStart(2,'0');
-    const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
-    const s = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
-    const hEl = document.getElementById('timer-h');
-    const mEl = document.getElementById('timer-m');
-    const sEl = document.getElementById('timer-s');
-    if (hEl) hEl.textContent = h;
-    if (mEl) mEl.textContent = m;
-    if (sEl) sEl.textContent = s;
-  }
-  tick();
-  setInterval(tick, 1000);
-}
-
-// ── NEWSLETTER ───────────────────────────────────────────────
-function subscribeNewsletter() {
-  const email = document.getElementById('newsletter-email').value.trim();
-  if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
-  // Save to localStorage (replace with Mailchimp API for real emails)
-  const subs = JSON.parse(localStorage.getItem('mcw_subs') || '[]');
-  if (subs.includes(email)) { showToast('You are already subscribed! 😊'); return; }
-  subs.push(email);
-  localStorage.setItem('mcw_subs', JSON.stringify(subs));
-  document.getElementById('newsletter-email').value = '';
-  showToast('🎉 Subscribed! Welcome to MCW deals!');
-}
-
-// ── BACK TO TOP ───────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  const btn = document.getElementById('back-to-top');
-  if (btn) btn.classList.toggle('show', window.scrollY > 400);
-});
-
-// ── SKELETON LOADING ─────────────────────────────────────────
-function showSkeletons(gridId, count = 4) {
-  const grid = document.getElementById(gridId);
-  if (!grid) return;
-  grid.innerHTML = Array(count).fill('').map(() => `
-    <div class="skeleton-card">
-      <div class="skeleton skeleton-img"></div>
-      <div class="skeleton skeleton-line"></div>
-      <div class="skeleton skeleton-line-sm"></div>
-    </div>`).join('');
-}
-
 // ── INIT ─────────────────────────────────────────────────────
 window.addEventListener('load', () => {
   checkLogin();
-  showSkeletons('products-grid', 4);
   loadProducts();
   renderCart();
-  startTimer();
-  // Cookie consent
-  if (!localStorage.getItem('mcw_cookies')) {
-    setTimeout(() => document.getElementById('cookie-bar').classList.add('show'), 2000);
-  }
-  // Close search when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-bar-wrap')) closeSearch();
-  });
 });
 </script>
 </body>

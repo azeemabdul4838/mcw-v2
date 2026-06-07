@@ -298,28 +298,28 @@
 
 <!-- ── STICKY CATEGORY BAR ── -->
 <div class="category-bar" id="category-bar">
-  <button class="cat-btn active" id="catbtn-all" onclick="selectCategory('', this)">
+  <button class="cat-btn active" id="catbtn-all" onclick="goShop('')">
     <i class="ti ti-layout-grid"></i>All
   </button>
-  <button class="cat-btn" id="catbtn-shirts" onclick="selectCategory('Shirts', this)">
+  <button class="cat-btn" id="catbtn-shirts" onclick="goShop('Shirts')">
     <i class="ti ti-shirt-sport"></i>Shirts
   </button>
-  <button class="cat-btn" id="catbtn-tshirts" onclick="selectCategory('T-Shirts', this)">
+  <button class="cat-btn" id="catbtn-tshirts" onclick="goShop('T-Shirts')">
     <i class="ti ti-shirt"></i>T-Shirts
   </button>
-  <button class="cat-btn" id="catbtn-jackets" onclick="selectCategory('Jackets', this)">
+  <button class="cat-btn" id="catbtn-jackets" onclick="goShop('Jackets')">
     <i class="ti ti-jacket"></i>Jackets
   </button>
-  <button class="cat-btn" id="catbtn-hoodies" onclick="selectCategory('Hoodies', this)">
+  <button class="cat-btn" id="catbtn-hoodies" onclick="goShop('Hoodies')">
     <i class="ti ti-hanger"></i>Hoodies
   </button>
-  <button class="cat-btn" id="catbtn-pants" onclick="selectCategory('Pants', this)">
+  <button class="cat-btn" id="catbtn-pants" onclick="goShop('Pants')">
     <i class="ti ti-wash-dry-2"></i>Pants
   </button>
-  <button class="cat-btn" id="catbtn-shoes" onclick="selectCategory('Shoes', this)">
+  <button class="cat-btn" id="catbtn-shoes" onclick="goShop('Shoes')">
     <i class="ti ti-shoe"></i>Shoes
   </button>
-  <button class="cat-btn" id="catbtn-accessories" onclick="selectCategory('Accessories', this)">
+  <button class="cat-btn" id="catbtn-accessories" onclick="goShop('Accessories')">
     <i class="ti ti-watch"></i>Accessories
   </button>
 </div>
@@ -381,13 +381,13 @@
 
     <!-- QUICK CATEGORY ACCESS — visible without scrolling -->
     <div class="hero-categories">
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
+      <div class="hero-cat" onclick="goShop('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
+      <div class="hero-cat" onclick="goShop('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+      <div class="hero-cat" onclick="goShop('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+      <div class="hero-cat" onclick="goShop('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+      <div class="hero-cat" onclick="goShop('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
+      <div class="hero-cat" onclick="goShop('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
+      <div class="hero-cat" onclick="goShop('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
     </div>
 
     <div class="hero-stats">
@@ -411,19 +411,19 @@
     <h2 class="section-title">SHOP BY STYLE</h2>
   </div>
   <div class="categories-grid">
-    <div class="cat-card" onclick="filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
-    <div class="cat-card" onclick="filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
-    <div class="cat-card" onclick="filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-    <div class="cat-card" onclick="filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
-    <div class="cat-card" onclick="filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
-    <div class="cat-card" onclick="filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
-    <div class="cat-card" onclick="filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
-    <div class="cat-card" onclick="filterByCategory('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
+    <div class="cat-card" onclick="goShop('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
+    <div class="cat-card" onclick="goShop('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+    <div class="cat-card" onclick="goShop('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+    <div class="cat-card" onclick="goShop('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+    <div class="cat-card" onclick="goShop('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
+    <div class="cat-card" onclick="goShop('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
+    <div class="cat-card" onclick="goShop('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
+    <div class="cat-card" onclick="goShop('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
   </div>
 </section>
 
 <!-- ── PRODUCTS ── -->
-<section class="section" id="shop" style="padding-top:40px;">
+<section class="section" id="shop" style="padding-top:40px;"><div id="own-products-section"></div>
 
   <!-- ── DATABASE AFFILIATE PRODUCTS (from admin panel) ── -->
   <div class="section-header">
@@ -442,14 +442,14 @@
     <p class="section-sub">Our own handpicked styles for the modern man</p>
   </div>
   <div class="tabs">
-    <button class="tab active" onclick="filterByCategory('')">All</button>
-    <button class="tab" onclick="filterByCategory('Shirts')">Shirts</button>
-    <button class="tab" onclick="filterByCategory('T-Shirts')">T-Shirts</button>
-    <button class="tab" onclick="filterByCategory('Jackets')">Jackets</button>
-    <button class="tab" onclick="filterByCategory('Hoodies')">Hoodies</button>
-    <button class="tab" onclick="filterByCategory('Pants')">Pants</button>
-    <button class="tab" onclick="filterByCategory('Shoes')">Shoes</button>
-    <button class="tab" onclick="filterByCategory('Accessories')">Accessories</button>
+    <button class="tab active" onclick="goShop('')">All</button>
+    <button class="tab" onclick="goShop('Shirts')">Shirts</button>
+    <button class="tab" onclick="goShop('T-Shirts')">T-Shirts</button>
+    <button class="tab" onclick="goShop('Jackets')">Jackets</button>
+    <button class="tab" onclick="goShop('Hoodies')">Hoodies</button>
+    <button class="tab" onclick="goShop('Pants')">Pants</button>
+    <button class="tab" onclick="goShop('Shoes')">Shoes</button>
+    <button class="tab" onclick="goShop('Accessories')">Accessories</button>
   </div>
   <div class="products-grid" id="products-grid">
     <div style="color:#555; font-size:14px; padding:40px; grid-column:1/-1; text-align:center;">Loading products...</div>
@@ -620,13 +620,13 @@
     <div>
       <h4>Shop</h4>
       <ul>
-        <li onclick="filterByCategory('Shirts')">Shirts</li>
-        <li onclick="filterByCategory('T-Shirts')">T-Shirts</li>
-        <li onclick="filterByCategory('Jackets')">Jackets</li>
-        <li onclick="filterByCategory('Hoodies')">Hoodies</li>
-        <li onclick="filterByCategory('Pants')">Pants</li>
-        <li onclick="filterByCategory('Shoes')">Shoes</li>
-        <li onclick="filterByCategory('Accessories')">Accessories</li>
+        <li onclick="goShop('Shirts')">Shirts</li>
+        <li onclick="goShop('T-Shirts')">T-Shirts</li>
+        <li onclick="goShop('Jackets')">Jackets</li>
+        <li onclick="goShop('Hoodies')">Hoodies</li>
+        <li onclick="goShop('Pants')">Pants</li>
+        <li onclick="goShop('Shoes')">Shoes</li>
+        <li onclick="goShop('Accessories')">Accessories</li>
       </ul>
     </div>
     <div>
@@ -718,22 +718,38 @@ function openCart() { document.getElementById('cart-drawer').classList.add('open
 function closeCart() { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); }
 
 // ── CATEGORY FILTER ──────────────────────────────────────────
-function selectCategory(cat, btn) {
+// ── MASTER CATEGORY FUNCTION ─────────────────────────────────
+// Called by ALL icons — hero, cat-cards, sticky bar, tabs, footer
+function goShop(cat) {
+  // 1. Update sticky bar active state
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => { if (t.textContent.trim() === (cat || 'All')) t.classList.add('active'); });
-  document.querySelectorAll('.hero-cat').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.hero-cat').forEach(c => { const s = c.querySelector('span'); if (s && s.textContent.trim().toUpperCase() === (cat||'ALL').toUpperCase()) c.classList.add('active'); });
-  loadProducts(cat);
-  setTimeout(() => { const sec = document.getElementById('own-products-section'); if (sec) sec.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
-}
-function filterByCategory(cat) {
   const catMap = {'':'catbtn-all','Shirts':'catbtn-shirts','T-Shirts':'catbtn-tshirts','Jackets':'catbtn-jackets','Hoodies':'catbtn-hoodies','Pants':'catbtn-pants','Shoes':'catbtn-shoes','Accessories':'catbtn-accessories'};
   const btn = document.getElementById(catMap[cat] || 'catbtn-all');
-  selectCategory(cat, btn);
+  if (btn) btn.classList.add('active');
+
+  // 2. Update tab active state
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.textContent.trim().toUpperCase() === (cat || 'ALL').toUpperCase()) t.classList.add('active');
+  });
+
+  // 3. Load filtered products
+  loadProducts(cat);
+
+  // 4. Scroll to products section
+  setTimeout(() => {
+    const sec = document.getElementById('own-products-section') || document.getElementById('shop');
+    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 150);
+
+  // 5. Show what category was selected
+  if (cat) showToast('Showing: ' + cat);
 }
-function goToCategory(cat) { filterByCategory(cat); }
+
+// Keep old names working too (for any existing calls)
+function selectCategory(cat, btn) { goShop(cat); }
+function filterByCategory(cat) { goShop(cat); }
+function goToCategory(cat) { goShop(cat); }
 
 // ── BLOG ─────────────────────────────────────────────────────
 function openBlogPost(slug) {

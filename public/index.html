@@ -96,12 +96,40 @@
     .stat-num { font-family:'Bebas Neue',sans-serif; font-size:40px; color:var(--gold); line-height:1; }
     .stat-label { font-size:12px; color:#666; letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
 
+    /* ── STICKY CATEGORY BAR ── */
+    .category-bar {
+      position:sticky; top:57px; z-index:99;
+      background:rgba(14,14,14,0.97);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:0 40px;
+      display:flex; align-items:center; gap:4px;
+      overflow-x:auto; scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+    }
+    .category-bar::-webkit-scrollbar { display:none; }
+    .cat-btn {
+      display:flex; flex-direction:column; align-items:center; gap:4px;
+      padding:10px 16px; cursor:pointer; border:none;
+      background:transparent; color:#666; font-size:10px;
+      letter-spacing:1.5px; text-transform:uppercase;
+      font-family:'DM Sans',sans-serif; font-weight:600;
+      white-space:nowrap; transition:all 0.2s;
+      border-bottom:2px solid transparent; flex-shrink:0;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .cat-btn i { font-size:20px; color:#555; transition:color 0.2s; }
+    .cat-btn:hover { color:var(--gold); }
+    .cat-btn:hover i { color:var(--gold); }
+    .cat-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
+    .cat-btn.active i { color:var(--gold); }
+
     /* ── HERO CATEGORIES ── */
     .hero-categories { display:flex; gap:10px; margin-top:32px; flex-wrap:wrap; }
-    .hero-cat { display:flex; flex-direction:column; align-items:center; gap:6px; background:rgba(232,184,109,0.08); border:1px solid rgba(232,184,109,0.2); border-radius:12px; padding:12px 16px; cursor:pointer; transition:all 0.2s; min-width:64px; -webkit-tap-highlight-color:transparent; }
-    .hero-cat:hover, .hero-cat.active { background:rgba(232,184,109,0.2); border-color:var(--gold); transform:translateY(-2px); }
-    .hero-cat i { font-size:22px; color:var(--gold); pointer-events:none; }
-    .hero-cat span { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#aaa; white-space:nowrap; pointer-events:none; }
+    .hero-cat { display:flex; flex-direction:column; align-items:center; gap:6px; background:rgba(232,184,109,0.08); border:1px solid rgba(232,184,109,0.2); border-radius:12px; padding:12px 16px; cursor:pointer; transition:all 0.2s; min-width:64px; }
+    .hero-cat:hover { background:rgba(232,184,109,0.15); border-color:var(--gold); transform:translateY(-2px); }
+    .hero-cat i { font-size:22px; color:var(--gold); }
+    .hero-cat span { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#aaa; white-space:nowrap; }
 
     /* ── ADSENSE SLOTS ── */
     .ad-slot { background:var(--dark2); border:1px dashed var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#444; font-size:12px; letter-spacing:1px; text-transform:uppercase; margin:32px 40px; }
@@ -198,6 +226,9 @@
     @media(max-width:768px) {
       nav { padding:12px 16px; }
       .nav-links { display:none; }
+      .category-bar { padding:0 8px; top:53px; }
+      .cat-btn { padding:8px 12px; font-size:9px; }
+      .cat-btn i { font-size:18px; }
       .nav-logo { font-size:22px; }
       .btn-nav { padding:6px 14px; font-size:11px; }
       .hero { padding:48px 16px; min-height:auto; }
@@ -265,6 +296,34 @@
   </div>
 </nav>
 
+<!-- ── STICKY CATEGORY BAR ── -->
+<div class="category-bar" id="category-bar">
+  <button class="cat-btn active" id="catbtn-all" onclick="selectCategory('', this)">
+    <i class="ti ti-layout-grid"></i>All
+  </button>
+  <button class="cat-btn" id="catbtn-shirts" onclick="selectCategory('Shirts', this)">
+    <i class="ti ti-shirt-sport"></i>Shirts
+  </button>
+  <button class="cat-btn" id="catbtn-tshirts" onclick="selectCategory('T-Shirts', this)">
+    <i class="ti ti-shirt"></i>T-Shirts
+  </button>
+  <button class="cat-btn" id="catbtn-jackets" onclick="selectCategory('Jackets', this)">
+    <i class="ti ti-jacket"></i>Jackets
+  </button>
+  <button class="cat-btn" id="catbtn-hoodies" onclick="selectCategory('Hoodies', this)">
+    <i class="ti ti-hanger"></i>Hoodies
+  </button>
+  <button class="cat-btn" id="catbtn-pants" onclick="selectCategory('Pants', this)">
+    <i class="ti ti-wash-dry-2"></i>Pants
+  </button>
+  <button class="cat-btn" id="catbtn-shoes" onclick="selectCategory('Shoes', this)">
+    <i class="ti ti-shoe"></i>Shoes
+  </button>
+  <button class="cat-btn" id="catbtn-accessories" onclick="selectCategory('Accessories', this)">
+    <i class="ti ti-watch"></i>Accessories
+  </button>
+</div>
+
 <!-- ── LOGIN MODAL ── -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
   <div class="modal">
@@ -322,13 +381,13 @@
 
     <!-- QUICK CATEGORY ACCESS — visible without scrolling -->
     <div class="hero-categories">
-      <div class="hero-cat" onclick="goToCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
-      <div class="hero-cat" onclick="goToCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
-      <div class="hero-cat" onclick="goToCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-      <div class="hero-cat" onclick="goToCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
-      <div class="hero-cat" onclick="goToCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
-      <div class="hero-cat" onclick="goToCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
-      <div class="hero-cat" onclick="goToCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
+      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
+      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
+      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
+      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
     </div>
 
     <div class="hero-stats">
@@ -352,14 +411,14 @@
     <h2 class="section-title">SHOP BY STYLE</h2>
   </div>
   <div class="categories-grid">
-    <div class="cat-card" onclick="goToCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
-    <div class="cat-card" onclick="goToCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
-    <div class="cat-card" onclick="goToCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-    <div class="cat-card" onclick="goToCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
-    <div class="cat-card" onclick="goToCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
-    <div class="cat-card" onclick="goToCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
-    <div class="cat-card" onclick="goToCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
-    <div class="cat-card" onclick="goToCategory('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
+    <div class="cat-card" onclick="filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
+    <div class="cat-card" onclick="filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+    <div class="cat-card" onclick="filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+    <div class="cat-card" onclick="filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+    <div class="cat-card" onclick="filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
+    <div class="cat-card" onclick="filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
+    <div class="cat-card" onclick="filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
+    <div class="cat-card" onclick="filterByCategory('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
   </div>
 </section>
 
@@ -377,7 +436,7 @@
   </div>
 
   <!-- ── OWN PRODUCTS BELOW ── -->
-  <div id="own-products-section" class="section-header" style="margin-top:40px;">
+  <div class="section-header" style="margin-top:40px;">
     <div class="section-eyebrow">Our Collection</div>
     <h2 class="section-title">MCW ORIGINALS</h2>
     <p class="section-sub">Our own handpicked styles for the modern man</p>
@@ -659,29 +718,22 @@ function openCart() { document.getElementById('cart-drawer').classList.add('open
 function closeCart() { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); }
 
 // ── CATEGORY FILTER ──────────────────────────────────────────
-function filterByCategory(cat) {
-  // Update active tab
+function selectCategory(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => { if (t.textContent.trim() === (cat || 'All')) t.classList.add('active'); });
-  // Load filtered products
-  loadProducts(cat);
-  // Scroll to OWN products section smoothly
-  setTimeout(() => {
-    const shopSection = document.getElementById('own-products-section');
-    if (shopSection) shopSection.scrollIntoView({behavior:'smooth', block:'start'});
-  }, 100);
-}
-
-function goToCategory(cat) {
-  // Highlight active hero-cat button
   document.querySelectorAll('.hero-cat').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.hero-cat').forEach(c => {
-    if (c.querySelector('span') && c.querySelector('span').textContent.trim().toUpperCase() === cat.toUpperCase()) {
-      c.classList.add('active');
-    }
-  });
-  filterByCategory(cat);
+  document.querySelectorAll('.hero-cat').forEach(c => { const s = c.querySelector('span'); if (s && s.textContent.trim().toUpperCase() === (cat||'ALL').toUpperCase()) c.classList.add('active'); });
+  loadProducts(cat);
+  setTimeout(() => { const sec = document.getElementById('own-products-section'); if (sec) sec.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
+function filterByCategory(cat) {
+  const catMap = {'':'catbtn-all','Shirts':'catbtn-shirts','T-Shirts':'catbtn-tshirts','Jackets':'catbtn-jackets','Hoodies':'catbtn-hoodies','Pants':'catbtn-pants','Shoes':'catbtn-shoes','Accessories':'catbtn-accessories'};
+  const btn = document.getElementById(catMap[cat] || 'catbtn-all');
+  selectCategory(cat, btn);
+}
+function goToCategory(cat) { filterByCategory(cat); }
 
 // ── BLOG ─────────────────────────────────────────────────────
 function openBlogPost(slug) {

@@ -98,10 +98,10 @@
 
     /* ── HERO CATEGORIES ── */
     .hero-categories { display:flex; gap:10px; margin-top:32px; flex-wrap:wrap; }
-    .hero-cat { display:flex; flex-direction:column; align-items:center; gap:6px; background:rgba(232,184,109,0.08); border:1px solid rgba(232,184,109,0.2); border-radius:12px; padding:12px 16px; cursor:pointer; transition:all 0.2s; min-width:64px; }
-    .hero-cat:hover { background:rgba(232,184,109,0.15); border-color:var(--gold); transform:translateY(-2px); }
-    .hero-cat i { font-size:22px; color:var(--gold); }
-    .hero-cat span { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#aaa; white-space:nowrap; }
+    .hero-cat { display:flex; flex-direction:column; align-items:center; gap:6px; background:rgba(232,184,109,0.08); border:1px solid rgba(232,184,109,0.2); border-radius:12px; padding:12px 16px; cursor:pointer; transition:all 0.2s; min-width:64px; -webkit-tap-highlight-color:transparent; }
+    .hero-cat:hover, .hero-cat.active { background:rgba(232,184,109,0.2); border-color:var(--gold); transform:translateY(-2px); }
+    .hero-cat i { font-size:22px; color:var(--gold); pointer-events:none; }
+    .hero-cat span { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#aaa; white-space:nowrap; pointer-events:none; }
 
     /* ── ADSENSE SLOTS ── */
     .ad-slot { background:var(--dark2); border:1px dashed var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#444; font-size:12px; letter-spacing:1px; text-transform:uppercase; margin:32px 40px; }
@@ -322,13 +322,13 @@
 
     <!-- QUICK CATEGORY ACCESS — visible without scrolling -->
     <div class="hero-categories">
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
+      <div class="hero-cat" onclick="goToCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
+      <div class="hero-cat" onclick="goToCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+      <div class="hero-cat" onclick="goToCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+      <div class="hero-cat" onclick="goToCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+      <div class="hero-cat" onclick="goToCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
+      <div class="hero-cat" onclick="goToCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
+      <div class="hero-cat" onclick="goToCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
     </div>
 
     <div class="hero-stats">
@@ -352,14 +352,14 @@
     <h2 class="section-title">SHOP BY STYLE</h2>
   </div>
   <div class="categories-grid">
-    <div class="cat-card" onclick="filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
-    <div class="cat-card" onclick="filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
-    <div class="cat-card" onclick="filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-    <div class="cat-card" onclick="filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
-    <div class="cat-card" onclick="filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
-    <div class="cat-card" onclick="filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
-    <div class="cat-card" onclick="filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
-    <div class="cat-card" onclick="filterByCategory('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
+    <div class="cat-card" onclick="goToCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
+    <div class="cat-card" onclick="goToCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+    <div class="cat-card" onclick="goToCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+    <div class="cat-card" onclick="goToCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+    <div class="cat-card" onclick="goToCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
+    <div class="cat-card" onclick="goToCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
+    <div class="cat-card" onclick="goToCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
+    <div class="cat-card" onclick="goToCategory('')"><i class="ti ti-layout-grid"></i><span>All Items</span></div>
   </div>
 </section>
 
@@ -377,7 +377,7 @@
   </div>
 
   <!-- ── OWN PRODUCTS BELOW ── -->
-  <div class="section-header" style="margin-top:40px;">
+  <div id="own-products-section" class="section-header" style="margin-top:40px;">
     <div class="section-eyebrow">Our Collection</div>
     <h2 class="section-title">MCW ORIGINALS</h2>
     <p class="section-sub">Our own handpicked styles for the modern man</p>
@@ -660,9 +660,27 @@ function closeCart() { document.getElementById('cart-drawer').classList.remove('
 
 // ── CATEGORY FILTER ──────────────────────────────────────────
 function filterByCategory(cat) {
+  // Update active tab
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => { if (t.textContent.trim() === (cat || 'All')) t.classList.add('active'); });
+  // Load filtered products
   loadProducts(cat);
+  // Scroll to OWN products section smoothly
+  setTimeout(() => {
+    const shopSection = document.getElementById('own-products-section');
+    if (shopSection) shopSection.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+}
+
+function goToCategory(cat) {
+  // Highlight active hero-cat button
+  document.querySelectorAll('.hero-cat').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.hero-cat').forEach(c => {
+    if (c.querySelector('span') && c.querySelector('span').textContent.trim().toUpperCase() === cat.toUpperCase()) {
+      c.classList.add('active');
+    }
+  });
+  filterByCategory(cat);
 }
 
 // ── BLOG ─────────────────────────────────────────────────────

@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root { --gold:#e8b86d; --dark:#0e0e0e; --dark2:#1a1a1a; --dark3:#242424; --border:#2a2a2a; --white:#f5f5f0; --gray:#888; --green:#66bb6a; --red:#e57373; }
+    :root { --gold:#e8b86d; --dark:#0e0e0e; --dark2:#1a1a1a; --dark3:#242424; --border:#2a2a2a; --white:#f5f5f0; --gray:#888; --green:#66bb6a; --red:#e57373; --blue:#64b5f6; }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family:'DM Sans',sans-serif; background:var(--dark); color:var(--white); display:flex; min-height:100vh; }
 
     /* SIDEBAR */
-    .sidebar { width:220px; background:var(--dark2); border-right:1px solid var(--border); padding:24px 0; flex-shrink:0; position:fixed; height:100vh; overflow-y:auto; }
+    .sidebar { width:230px; background:var(--dark2); border-right:1px solid var(--border); padding:24px 0; flex-shrink:0; position:fixed; height:100vh; overflow-y:auto; }
     .sidebar-logo { font-size:22px; font-weight:700; color:var(--gold); letter-spacing:3px; padding:0 24px 24px; border-bottom:1px solid var(--border); margin-bottom:16px; }
     .sidebar-logo span { font-size:11px; color:#555; display:block; font-weight:400; letter-spacing:1px; margin-top:2px; }
     .nav-item { display:flex; align-items:center; gap:12px; padding:12px 24px; color:#666; font-size:13px; cursor:pointer; transition:all 0.2s; letter-spacing:0.5px; border-left:3px solid transparent; }
@@ -22,23 +22,32 @@
     .sidebar-section { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#444; padding:16px 24px 8px; }
 
     /* MAIN */
-    .main { margin-left:220px; flex:1; padding:32px; }
+    .main { margin-left:230px; flex:1; padding:32px; }
     .page { display:none; }
     .page.active { display:block; }
+    .page-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:32px; flex-wrap:wrap; gap:16px; }
     .page-title { font-size:24px; font-weight:600; margin-bottom:4px; }
-    .page-sub { font-size:13px; color:var(--gray); margin-bottom:32px; }
+    .page-sub { font-size:13px; color:var(--gray); }
 
-    /* CARDS */
-    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:32px; }
-    .stat-card { background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:24px; }
+    /* STAT CARDS */
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:32px; }
+    .stat-card { background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:20px 24px; position:relative; overflow:hidden; }
+    .stat-card::before { content:''; position:absolute; top:0; right:0; width:60px; height:60px; border-radius:0 12px 0 100%; opacity:0.05; }
+    .stat-card.gold::before { background:var(--gold); }
+    .stat-card.green::before { background:var(--green); }
+    .stat-card.blue::before { background:var(--blue); }
+    .stat-card.red::before { background:var(--red); }
     .stat-label { font-size:11px; color:var(--gray); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
     .stat-value { font-size:28px; font-weight:700; color:var(--gold); }
     .stat-sub { font-size:12px; color:#555; margin-top:4px; }
+    .stat-icon { position:absolute; top:20px; right:20px; font-size:24px; color:var(--gold); opacity:0.3; }
 
     /* TABLE */
     .table-box { background:var(--dark2); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:24px; }
-    .table-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .table-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
     .table-header h3 { font-size:15px; font-weight:600; }
+    .table-search { background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:8px 14px; color:var(--white); font-size:13px; outline:none; width:200px; }
+    .table-search:focus { border-color:var(--gold); }
     table { width:100%; border-collapse:collapse; }
     th { font-size:11px; font-weight:600; color:var(--gray); text-transform:uppercase; letter-spacing:1px; padding:12px 24px; text-align:left; border-bottom:1px solid var(--border); }
     td { padding:14px 24px; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.03); }
@@ -46,27 +55,32 @@
     tr:hover td { background:rgba(255,255,255,0.02); }
 
     /* BADGES */
-    .badge { display:inline-block; padding:3px 10px; border-radius:100px; font-size:11px; font-weight:600; letter-spacing:0.5px; }
-    .badge-pending  { background:rgba(232,184,109,0.1); color:var(--gold); }
-    .badge-paid     { background:rgba(102,187,106,0.1); color:var(--green); }
-    .badge-shipped  { background:rgba(100,181,246,0.1); color:#64b5f6; }
-    .badge-delivered{ background:rgba(102,187,106,0.2); color:var(--green); }
-    .badge-own      { background:rgba(232,184,109,0.1); color:var(--gold); }
-    .badge-affiliate{ background:rgba(100,181,246,0.1); color:#64b5f6; }
+    .badge { display:inline-block; padding:3px 10px; border-radius:100px; font-size:11px; font-weight:600; }
+    .badge-pending   { background:rgba(232,184,109,0.1); color:var(--gold); }
+    .badge-paid      { background:rgba(102,187,106,0.1); color:var(--green); }
+    .badge-shipped   { background:rgba(100,181,246,0.1); color:var(--blue); }
+    .badge-delivered { background:rgba(102,187,106,0.2); color:var(--green); }
+    .badge-cancelled { background:rgba(229,115,115,0.1); color:var(--red); }
+    .badge-own       { background:rgba(232,184,109,0.1); color:var(--gold); }
+    .badge-affiliate { background:rgba(100,181,246,0.1); color:var(--blue); }
 
     /* BUTTONS */
-    .btn { padding:8px 18px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; border:none; letter-spacing:0.5px; transition:all 0.2s; }
+    .btn { padding:8px 18px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; border:none; letter-spacing:0.5px; transition:all 0.2s; display:inline-flex; align-items:center; gap:6px; }
     .btn-gold { background:var(--gold); color:var(--dark); }
     .btn-gold:hover { background:#f5d08a; }
     .btn-outline { background:transparent; color:var(--gold); border:1px solid var(--gold); }
     .btn-outline:hover { background:var(--gold); color:var(--dark); }
     .btn-red { background:rgba(229,115,115,0.1); color:var(--red); border:1px solid rgba(229,115,115,0.3); }
     .btn-red:hover { background:var(--red); color:#fff; }
+    .btn-blue { background:rgba(100,181,246,0.1); color:var(--blue); border:1px solid rgba(100,181,246,0.3); }
+    .btn-blue:hover { background:var(--blue); color:var(--dark); }
+    .btn-green { background:rgba(102,187,106,0.1); color:var(--green); border:1px solid rgba(102,187,106,0.3); }
+    .btn-green:hover { background:var(--green); color:var(--dark); }
     .btn-sm { padding:5px 12px; font-size:11px; }
 
     /* FORM */
     .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    .form-group { margin-bottom:16px; }
+    .form-group { margin-bottom:0; }
     .form-group.full { grid-column:1/-1; }
     .form-group label { display:block; font-size:11px; font-weight:600; color:var(--gray); margin-bottom:6px; letter-spacing:1px; text-transform:uppercase; }
     .form-group input, .form-group select, .form-group textarea {
@@ -78,24 +92,27 @@
     .form-group textarea { min-height:80px; resize:vertical; }
 
     /* MODAL */
-    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; }
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; padding:16px; }
     .modal-overlay.open { display:flex; }
-    .modal { background:var(--dark2); border:1px solid var(--border); border-radius:16px; padding:32px; width:100%; max-width:560px; max-height:90vh; overflow-y:auto; position:relative; }
+    .modal { background:var(--dark2); border:1px solid var(--border); border-radius:16px; padding:32px; width:100%; max-width:580px; max-height:90vh; overflow-y:auto; position:relative; }
     .modal h3 { font-size:18px; font-weight:600; margin-bottom:24px; color:var(--gold); }
     .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:#666; font-size:20px; cursor:pointer; }
+    .modal-close:hover { color:var(--white); }
 
     /* TOGGLE */
     .type-toggle { display:flex; gap:8px; margin-bottom:20px; }
     .type-btn { flex:1; padding:10px; border-radius:8px; text-align:center; font-size:13px; font-weight:500; cursor:pointer; border:1px solid var(--border); color:#666; transition:all 0.2s; background:transparent; }
     .type-btn.active { background:var(--gold); color:var(--dark); border-color:var(--gold); }
 
-    /* ALERT */
+    /* ALERTS */
     .alert { padding:12px 16px; border-radius:8px; font-size:13px; margin-bottom:16px; }
     .alert-success { background:rgba(102,187,106,0.1); color:var(--green); border:1px solid rgba(102,187,106,0.3); }
-    .alert-error { background:rgba(229,115,115,0.1); color:var(--red); border:1px solid rgba(229,115,115,0.3); }
+    .alert-error   { background:rgba(229,115,115,0.1); color:var(--red);   border:1px solid rgba(229,115,115,0.3); }
+    .alert-info    { background:rgba(100,181,246,0.1); color:var(--blue);  border:1px solid rgba(100,181,246,0.3); }
 
     select.status-select { background:var(--dark3); color:var(--white); border:1px solid var(--border); border-radius:6px; padding:4px 8px; font-size:12px; cursor:pointer; }
 
+    /* AFFILIATE GUIDE */
     .affiliate-guide { background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:24px; }
     .affiliate-guide h3 { color:var(--gold); margin-bottom:16px; font-size:16px; }
     .step { display:flex; gap:16px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border); }
@@ -105,10 +122,46 @@
     .step-text p { font-size:13px; color:var(--gray); line-height:1.6; }
     .step-text a { color:var(--gold); }
 
+    /* LOGIN */
     .login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; width:100%; }
     .login-box { background:var(--dark2); border:1px solid var(--border); border-radius:16px; padding:40px; width:100%; max-width:380px; }
     .login-box h2 { color:var(--gold); font-size:22px; letter-spacing:2px; margin-bottom:4px; }
     .login-box p { color:var(--gray); font-size:13px; margin-bottom:28px; }
+
+    /* BLOG EDITOR */
+    .blog-editor { background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:16px; min-height:200px; color:var(--white); font-size:14px; outline:none; line-height:1.8; }
+    .blog-editor:focus { border-color:var(--gold); }
+
+    /* QUICK ACTIONS */
+    .quick-actions { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:32px; }
+    .quick-action { background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; cursor:pointer; transition:all 0.2s; }
+    .quick-action:hover { border-color:var(--gold); transform:translateY(-2px); }
+    .quick-action i { font-size:24px; color:var(--gold); display:block; margin-bottom:8px; }
+    .quick-action span { font-size:12px; color:#aaa; }
+
+    /* CATEGORY MANAGER */
+    .cat-tag { display:inline-flex; align-items:center; gap:6px; background:var(--dark3); border:1px solid var(--border); border-radius:100px; padding:6px 14px; font-size:12px; margin:4px; }
+    .cat-tag button { background:none; border:none; color:#666; cursor:pointer; font-size:14px; padding:0; }
+    .cat-tag button:hover { color:var(--red); }
+
+    /* NOTIFICATION */
+    .notif { position:fixed; top:24px; right:24px; background:var(--dark2); color:var(--gold); border:1px solid var(--border); padding:14px 20px; border-radius:10px; font-size:13px; z-index:99999; animation:slideIn 0.3s ease; max-width:300px; }
+    @keyframes slideIn { from{transform:translateX(100px);opacity:0} to{transform:translateX(0);opacity:1} }
+
+    /* TOGGLE SWITCH */
+    .toggle { position:relative; display:inline-block; width:40px; height:22px; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .slider { position:absolute; cursor:pointer; inset:0; background:#444; border-radius:22px; transition:0.3s; }
+    .slider:before { position:absolute; content:''; height:16px; width:16px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; }
+    input:checked + .slider { background:var(--gold); }
+    input:checked + .slider:before { transform:translateX(18px); }
+
+    /* CHART BAR */
+    .mini-chart { display:flex; align-items:flex-end; gap:4px; height:60px; margin-top:12px; }
+    .mini-bar { flex:1; background:var(--gold); border-radius:3px 3px 0 0; opacity:0.7; min-height:4px; transition:height 0.5s; }
+
+    /* PRODUCT IMAGE PREVIEW */
+    .img-preview { width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid var(--border); }
   </style>
 </head>
 <body>
@@ -119,9 +172,9 @@
     <h2>MCW ADMIN</h2>
     <p>Sign in with your admin account</p>
     <div id="login-alert"></div>
-    <div class="form-group"><label>Email</label><input type="email" id="admin-email" placeholder="admin@mcw.com"/></div>
-    <div class="form-group"><label>Password</label><input type="password" id="admin-password" placeholder="Your password"/></div>
-    <button class="btn btn-gold" style="width:100%;padding:12px;" onclick="adminLogin()">Login to Admin Panel</button>
+    <div class="form-group" style="margin-bottom:16px;"><label>Email</label><input type="email" id="admin-email" placeholder="admin@mcw.com" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
+    <div class="form-group" style="margin-bottom:20px;"><label>Password</label><input type="password" id="admin-password" placeholder="Your password" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;" onclick="adminLogin()"><i class="ti ti-login"></i> Login to Admin Panel</button>
   </div>
 </div>
 
@@ -137,105 +190,330 @@
   <div class="nav-item" onclick="showPage('products')"><i class="ti ti-shirt"></i> Products</div>
   <div class="nav-item" onclick="showPage('orders')"><i class="ti ti-package"></i> Orders</div>
   <div class="nav-item" onclick="showPage('customers')"><i class="ti ti-users"></i> Customers</div>
+  <div class="nav-item" onclick="showPage('categories')"><i class="ti ti-category"></i> Categories</div>
+  <div class="sidebar-section">Content</div>
+  <div class="nav-item" onclick="showPage('blogs')"><i class="ti ti-pencil"></i> Blog Posts</div>
+  <div class="nav-item" onclick="showPage('banners')"><i class="ti ti-speakerphone"></i> Site Banners</div>
   <div class="sidebar-section">Affiliate</div>
   <div class="nav-item" onclick="showPage('affiliate')"><i class="ti ti-link"></i> Affiliate Guide</div>
+  <div class="nav-item" onclick="showPage('earnings')"><i class="ti ti-coin"></i> Earnings Tracker</div>
   <div class="sidebar-section">Account</div>
   <div class="nav-item" onclick="showPage('password')"><i class="ti ti-lock"></i> Change Password</div>
+  <div class="nav-item" onclick="showPage('settings')"><i class="ti ti-settings"></i> Site Settings</div>
   <div class="nav-item" onclick="goToSite()"><i class="ti ti-world"></i> View Site</div>
   <div class="nav-item" onclick="adminLogout()"><i class="ti ti-logout"></i> Logout</div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main">
 
-  <!-- DASHBOARD -->
+  <!-- ══ DASHBOARD ══ -->
   <div class="page active" id="page-dashboard">
-    <div class="page-title">Dashboard</div>
-    <div class="page-sub">Welcome back! Here's what's happening with your store.</div>
-    <div class="stats-grid" id="stats-grid">
-      <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value" id="stat-revenue">₹0</div><div class="stat-sub">From paid orders</div></div>
-      <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value" id="stat-orders">0</div><div class="stat-sub">All time</div></div>
-      <div class="stat-card"><div class="stat-label">Customers</div><div class="stat-value" id="stat-customers">0</div><div class="stat-sub">Registered users</div></div>
-      <div class="stat-card"><div class="stat-label">Products</div><div class="stat-value" id="stat-products">0</div><div class="stat-sub">Active listings</div></div>
+    <div class="page-header">
+      <div>
+        <div class="page-title">Dashboard</div>
+        <div class="page-sub">Welcome back! Here's what's happening with your store.</div>
+      </div>
+      <button class="btn btn-outline" onclick="loadDashboard()"><i class="ti ti-refresh"></i> Refresh</button>
     </div>
-    <div class="table-box">
-      <div class="table-header"><h3>Recent Orders</h3></div>
-      <table><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
-      <tbody id="recent-orders-table"></tbody></table>
+
+    <div class="stats-grid">
+      <div class="stat-card gold"><i class="ti ti-currency-rupee stat-icon"></i><div class="stat-label">Total Revenue</div><div class="stat-value" id="stat-revenue">₹0</div><div class="stat-sub">From paid orders</div></div>
+      <div class="stat-card green"><i class="ti ti-package stat-icon"></i><div class="stat-label">Total Orders</div><div class="stat-value" id="stat-orders">0</div><div class="stat-sub">All time</div></div>
+      <div class="stat-card blue"><i class="ti ti-users stat-icon"></i><div class="stat-label">Customers</div><div class="stat-value" id="stat-customers">0</div><div class="stat-sub">Registered users</div></div>
+      <div class="stat-card gold"><i class="ti ti-shirt stat-icon"></i><div class="stat-label">Products</div><div class="stat-value" id="stat-products">0</div><div class="stat-sub">Active listings</div></div>
+      <div class="stat-card green"><i class="ti ti-pencil stat-icon"></i><div class="stat-label">Blog Posts</div><div class="stat-value" id="stat-blogs">0</div><div class="stat-sub">Published</div></div>
+      <div class="stat-card blue"><i class="ti ti-check stat-icon"></i><div class="stat-label">Paid Orders</div><div class="stat-value" id="stat-paid">0</div><div class="stat-sub">Successful payments</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+      <div class="table-box">
+        <div class="table-header"><h3>Recent Orders</h3><button class="btn btn-outline btn-sm" onclick="showPage('orders')">View All</button></div>
+        <table><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="recent-orders-table"></tbody></table>
+      </div>
+      <div class="table-box">
+        <div class="table-header"><h3>Quick Actions</h3></div>
+        <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <button class="btn btn-gold" onclick="showPage('products');openProductModal('own')" style="justify-content:center;"><i class="ti ti-plus"></i> Add Product</button>
+          <button class="btn btn-blue" onclick="showPage('products');openProductModal('affiliate')" style="justify-content:center;"><i class="ti ti-link"></i> Add Affiliate</button>
+          <button class="btn btn-outline" onclick="showPage('blogs');openBlogModal()" style="justify-content:center;"><i class="ti ti-pencil"></i> Write Blog</button>
+          <button class="btn btn-green" onclick="showPage('orders')" style="justify-content:center;"><i class="ti ti-package"></i> View Orders</button>
+          <button class="btn btn-outline" onclick="showPage('customers')" style="justify-content:center;"><i class="ti ti-users"></i> Customers</button>
+          <button class="btn btn-outline" onclick="goToSite()" style="justify-content:center;"><i class="ti ti-world"></i> View Site</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- PRODUCTS -->
+  <!-- ══ PRODUCTS ══ -->
   <div class="page" id="page-products">
-    <div class="page-title">Products</div>
-    <div class="page-sub">Add your own products or affiliate products from Amazon, Myntra & Flipkart.</div>
-    <div style="margin-bottom:20px;">
-      <button class="btn btn-gold" onclick="openProductModal()"><i class="ti ti-plus"></i> Add New Product</button>
+    <div class="page-header">
+      <div>
+        <div class="page-title">Products</div>
+        <div class="page-sub">Manage your own products and affiliate products.</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-outline" onclick="openProductModal('affiliate')"><i class="ti ti-link"></i> Add Affiliate</button>
+        <button class="btn btn-gold" onclick="openProductModal('own')"><i class="ti ti-plus"></i> Add Own Product</button>
+      </div>
     </div>
     <div id="products-alert"></div>
+
+    <!-- Filter bar -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+      <button class="btn btn-outline btn-sm" onclick="filterProducts('')">All</button>
+      <button class="btn btn-outline btn-sm" onclick="filterProducts('own')">Own Products</button>
+      <button class="btn btn-outline btn-sm" onclick="filterProducts('affiliate')">Affiliate</button>
+    </div>
+
     <div class="table-box">
-      <div class="table-header"><h3>All Products</h3><span id="product-count" style="font-size:13px;color:var(--gray);"></span></div>
-      <table><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Type</th><th>Stock</th><th>Actions</th></tr></thead>
+      <div class="table-header">
+        <h3>All Products <span id="product-count" style="font-size:13px;color:var(--gray);font-weight:400;"></span></h3>
+        <input class="table-search" placeholder="🔍 Search products..." oninput="searchProducts(this.value)"/>
+      </div>
+      <table><thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Type</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
       <tbody id="products-table"></tbody></table>
     </div>
   </div>
 
-  <!-- ORDERS -->
+  <!-- ══ ORDERS ══ -->
   <div class="page" id="page-orders">
-    <div class="page-title">Orders</div>
-    <div class="page-sub">View and manage all customer orders. Update shipping status here.</div>
+    <div class="page-header">
+      <div>
+        <div class="page-title">Orders</div>
+        <div class="page-sub">View and manage all customer orders.</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <select id="order-filter" class="table-search" style="width:auto;" onchange="filterOrders(this.value)">
+          <option value="">All Orders</option>
+          <option value="pending">Pending</option>
+          <option value="paid">Paid</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <button class="btn btn-outline" onclick="loadOrders()"><i class="ti ti-refresh"></i> Refresh</button>
+      </div>
+    </div>
     <div class="table-box">
-      <div class="table-header"><h3>All Orders</h3></div>
-      <table><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+      <div class="table-header"><h3>All Orders</h3><input class="table-search" placeholder="🔍 Search orders..." oninput="searchOrders(this.value)"/></div>
+      <table><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
       <tbody id="orders-table"></tbody></table>
     </div>
   </div>
 
-  <!-- CUSTOMERS -->
+  <!-- ══ CUSTOMERS ══ -->
   <div class="page" id="page-customers">
-    <div class="page-title">Customers</div>
-    <div class="page-sub">All registered customers and their details.</div>
+    <div class="page-header">
+      <div>
+        <div class="page-title">Customers</div>
+        <div class="page-sub">All registered customers and their details.</div>
+      </div>
+      <button class="btn btn-outline" onclick="loadCustomers()"><i class="ti ti-refresh"></i> Refresh</button>
+    </div>
     <div class="table-box">
-      <div class="table-header"><h3>All Customers</h3></div>
-      <table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Bank Linked</th><th>Joined</th></tr></thead>
+      <div class="table-header"><h3>All Customers</h3><input class="table-search" placeholder="🔍 Search customers..." oninput="searchCustomers(this.value)"/></div>
+      <table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th><th>Actions</th></tr></thead>
       <tbody id="customers-table"></tbody></table>
     </div>
   </div>
 
-  <!-- AFFILIATE GUIDE -->
+  <!-- ══ CATEGORIES ══ -->
+  <div class="page" id="page-categories">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Category Manager</div>
+        <div class="page-sub">Add or remove product categories. These will appear in the filter tabs on your website.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:24px;">
+        <h3 style="font-size:15px;margin-bottom:16px;color:var(--gold);">Main Categories</h3>
+        <div id="main-categories">
+          <div class="cat-tag"><i class="ti ti-shirt"></i> T-Shirts <button onclick="removeCategory('T-Shirts')">✕</button></div>
+          <div class="cat-tag"><i class="ti ti-jacket"></i> Jackets <button onclick="removeCategory('Jackets')">✕</button></div>
+          <div class="cat-tag"><i class="ti ti-hanger"></i> Hoodies <button onclick="removeCategory('Hoodies')">✕</button></div>
+          <div class="cat-tag"><i class="ti ti-shoe"></i> Shoes <button onclick="removeCategory('Shoes')">✕</button></div>
+          <div class="cat-tag"><i class="ti ti-watch"></i> Accessories <button onclick="removeCategory('Accessories')">✕</button></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:16px;">
+          <input type="text" id="new-category" placeholder="e.g. Shorts" style="flex:1;padding:10px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;outline:none;"/>
+          <button class="btn btn-gold" onclick="addCategory()"><i class="ti ti-plus"></i> Add</button>
+        </div>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:24px;">
+        <h3 style="font-size:15px;margin-bottom:16px;color:var(--gold);">Pants Sub-Categories</h3>
+        <div id="pants-categories">
+          <div class="cat-tag">Bootcut <button onclick="removePantsCat('Bootcut')">✕</button></div>
+          <div class="cat-tag">Baggy <button onclick="removePantsCat('Baggy')">✕</button></div>
+          <div class="cat-tag">Straight <button onclick="removePantsCat('Straight')">✕</button></div>
+          <div class="cat-tag">Stylish Tracks <button onclick="removePantsCat('Tracks')">✕</button></div>
+          <div class="cat-tag">Formals <button onclick="removePantsCat('Formals')">✕</button></div>
+          <div class="cat-tag">Joggers <button onclick="removePantsCat('Joggers')">✕</button></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:16px;">
+          <input type="text" id="new-pants-cat" placeholder="e.g. Chinos" style="flex:1;padding:10px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:14px;outline:none;"/>
+          <button class="btn btn-gold" onclick="addPantsCat()"><i class="ti ti-plus"></i> Add</button>
+        </div>
+      </div>
+    </div>
+    <div style="background:rgba(232,184,109,0.05);border:1px solid rgba(232,184,109,0.2);border-radius:12px;padding:16px;margin-top:16px;">
+      <p style="font-size:13px;color:var(--gray);"><i class="ti ti-info-circle" style="color:var(--gold);"></i> <strong style="color:var(--gold);">Note:</strong> After adding/removing categories here, you'll need to update your index.html file and push to GitHub for changes to appear on your live site. This manager helps you plan your categories.</p>
+    </div>
+  </div>
+
+  <!-- ══ BLOGS ══ -->
+  <div class="page" id="page-blogs">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Blog Posts</div>
+        <div class="page-sub">Write fashion articles to attract Google traffic and add affiliate links inside.</div>
+      </div>
+      <button class="btn btn-gold" onclick="openBlogModal()"><i class="ti ti-plus"></i> Write New Post</button>
+    </div>
+    <div id="blogs-alert"></div>
+    <div class="table-box">
+      <div class="table-header"><h3>All Blog Posts</h3></div>
+      <table><thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody id="blogs-table"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ══ BANNERS ══ -->
+  <div class="page" id="page-banners">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Site Banners</div>
+        <div class="page-sub">Manage the offer banner and announcements on your website.</div>
+      </div>
+    </div>
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px;">
+      <h3 style="font-size:15px;margin-bottom:20px;color:var(--gold);">Offer Banner</h3>
+      <div class="form-grid" style="gap:16px;">
+        <div class="form-group"><label>Banner Headline</label><input type="text" id="banner-headline" placeholder="e.g. FREE SHIPPING ON MOST ORDERS" value="FREE SHIPPING ON MOST ORDERS"/></div>
+        <div class="form-group"><label>Banner Subtext</label><input type="text" id="banner-subtext" placeholder="e.g. Easy 15-day returns." value="Easy 15-day returns. 100% authentic products."/></div>
+        <div class="form-group"><label>Show Coupon Code?</label>
+          <select id="banner-show-coupon"><option value="no">No coupon</option><option value="yes">Yes, show coupon</option></select>
+        </div>
+        <div class="form-group"><label>Coupon Code (if enabled)</label><input type="text" id="banner-coupon" placeholder="e.g. MCW20"/></div>
+      </div>
+      <button class="btn btn-gold" style="margin-top:16px;" onclick="saveBannerSettings()"><i class="ti ti-check"></i> Save Banner Settings</button>
+      <div id="banner-alert" style="margin-top:12px;"></div>
+    </div>
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:24px;">
+      <h3 style="font-size:15px;margin-bottom:16px;color:var(--gold);">Hero Section Text</h3>
+      <div class="form-grid" style="gap:16px;">
+        <div class="form-group"><label>Hero Title Line 1</label><input type="text" id="hero-line1" placeholder="WEAR THE" value="WEAR THE"/></div>
+        <div class="form-group"><label>Hero Title Line 2 (Gold)</label><input type="text" id="hero-line2" placeholder="STREET." value="STREET."/></div>
+        <div class="form-group full"><label>Hero Subtitle</label><input type="text" id="hero-sub" placeholder="Premium casual & streetwear..." value="Premium casual & streetwear for the modern man."/></div>
+      </div>
+      <button class="btn btn-gold" style="margin-top:16px;" onclick="showNotif('✅ Hero settings saved! Push to GitHub to apply.')"><i class="ti ti-check"></i> Save Hero Settings</button>
+    </div>
+  </div>
+
+  <!-- ══ AFFILIATE ══ -->
   <div class="page" id="page-affiliate">
     <div class="page-title">Affiliate Guide</div>
-    <div class="page-sub">Step-by-step guide to earn commissions from Amazon, Myntra & Flipkart.</div>
+    <div class="page-sub" style="margin-bottom:32px;">Step-by-step guide to earn commissions from Amazon, Myntra & more.</div>
 
-    <!-- AMAZON -->
     <div class="affiliate-guide">
-      <h3><i class="ti ti-brand-amazon"></i> Amazon Associates India</h3>
-      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Sign Up</h4><p>Go to <a href="https://affiliate-program.amazon.in" target="_blank">affiliate-program.amazon.in</a> and click "Sign Up". Use your existing Amazon account.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Enter Website Details</h4><p>Enter your website URL (your MCW site). Describe it as a men's fashion blog & product review site.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Get Approved</h4><p>Amazon approves within 1-3 days. You need to make 3 sales within 180 days to stay approved.</p></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-text"><h4>Get Affiliate Links</h4><p>Search any product on Amazon → click "Get Link" in the top bar → copy the link → paste it in your affiliate product here in admin.</p></div></div>
-      <div class="step"><div class="step-num">5</div><div class="step-text"><h4>Commission Rates</h4><p>Fashion & Clothing: <strong style="color:var(--gold)">9%</strong> | Shoes: <strong style="color:var(--gold)">9%</strong> | Watches: <strong style="color:var(--gold)">9%</strong>. Payments via bank transfer every month.</p></div></div>
+      <h3><i class="ti ti-brand-amazon"></i> Amazon Associates India ✅ (Already Approved!)</h3>
+      <div class="step"><div class="step-num">✓</div><div class="step-text"><h4>Your Associate ID</h4><p>Your ID is <strong style="color:var(--gold);">mcwfashion-21</strong> — already approved and active!</p></div></div>
+      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Get Affiliate Links</h4><p>Go to <a href="https://www.amazon.in" target="_blank">amazon.in</a> → search any product → use the SiteStripe bar at top → click "Text" → copy your link.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Or Build Link Manually</h4><p>Take any Amazon URL and add <strong style="color:var(--gold);">?tag=mcwfashion-21</strong> at the end. Example: amazon.in/dp/B0XXXXXX?tag=mcwfashion-21</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Commission Rates</h4><p>Fashion & Clothing: <strong style="color:var(--gold);">9%</strong> | Shoes: <strong style="color:var(--gold);">9%</strong> | Accessories: <strong style="color:var(--gold);">9%</strong> | Min payout: ₹2,500</p></div></div>
+      <button class="btn btn-gold" style="margin-top:8px;" onclick="showPage('products');openProductModal('affiliate')"><i class="ti ti-plus"></i> Add Amazon Product Now</button>
     </div>
 
-    <!-- MYNTRA -->
     <div class="affiliate-guide">
-      <h3><i class="ti ti-link"></i> Myntra Affiliate Program</h3>
-      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Sign Up via Admitad or vCommission</h4><p>Myntra runs through affiliate networks. Sign up at <a href="https://www.vcommission.com" target="_blank">vcommission.com</a> or <a href="https://www.admitad.com" target="_blank">admitad.com</a> and search for Myntra.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Apply to Myntra Program</h4><p>Inside the network, apply to the "Myntra" affiliate program. Approval takes 2-5 days.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Generate Links</h4><p>Once approved, go to any Myntra product page, use the network's link builder tool to create your affiliate link.</p></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-text"><h4>Commission</h4><p>Men's fashion: <strong style="color:var(--gold)">up to 10%</strong>. Payments monthly via bank transfer when you cross ₹1000 threshold.</p></div></div>
+      <h3><i class="ti ti-link"></i> Cuelinks (Myntra, Flipkart, Ajio + 500 brands) ⏳ Approval Pending</h3>
+      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Wait for Approval</h4><p>You've already signed up on <a href="https://www.cuelinks.com" target="_blank">cuelinks.com</a>. Approval takes 1-3 business days. Check your email!</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>After Approval</h4><p>Login to Cuelinks → go to "Publishers" dashboard → find Myntra/Flipkart/Ajio programs → apply to each → get your unique links.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Add Links Here</h4><p>Once you have Myntra/Flipkart affiliate links, come back to Products → Add Affiliate Product → select the platform → paste your link.</p></div></div>
     </div>
 
-    <!-- FLIPKART -->
     <div class="affiliate-guide">
-      <h3><i class="ti ti-link"></i> Flipkart Affiliate Program</h3>
-      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Sign Up</h4><p>Go to <a href="https://affiliate.flipkart.com" target="_blank">affiliate.flipkart.com</a> and register with your email and website details.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Get Links</h4><p>Log in → go to any product → click "Affiliate Links" → copy and paste the link into your affiliate product below.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Commission</h4><p>Clothing & accessories: <strong style="color:var(--gold)">up to 10%</strong>. Footwear: <strong style="color:var(--gold)">up to 12%</strong>. Minimum payout ₹250.</p></div></div>
+      <h3><i class="ti ti-chart-bar"></i> Tips to Earn More</h3>
+      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Write Blog Posts</h4><p>Articles like "Best Hoodies Under ₹2000" bring free Google traffic. Add affiliate links inside — these convert the best!</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Target Buying Intent Keywords</h4><p>Write posts with "best", "under ₹X", "review", "buy" in the title. These visitors are ready to purchase.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Promote on Instagram</h4><p>Share product links on Instagram stories and posts. Add your website URL in bio. Drives direct traffic!</p></div></div>
     </div>
+  </div>
 
-    <div style="margin-top:8px;">
-      <button class="btn btn-gold" onclick="showPage('products'); openProductModal('affiliate')"><i class="ti ti-plus"></i> Add Affiliate Product Now</button>
+  <!-- ══ EARNINGS TRACKER ══ -->
+  <div class="page" id="page-earnings">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Earnings Tracker</div>
+        <div class="page-sub">Manually track your affiliate earnings from Amazon and other platforms.</div>
+      </div>
+      <button class="btn btn-gold" onclick="addEarningEntry()"><i class="ti ti-plus"></i> Add Entry</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px;">
+      <div class="stat-card gold"><div class="stat-label">Amazon Earnings</div><div class="stat-value" id="amazon-total">₹0</div><div class="stat-sub">This month</div></div>
+      <div class="stat-card blue"><div class="stat-label">Myntra Earnings</div><div class="stat-value" id="myntra-total">₹0</div><div class="stat-sub">This month</div></div>
+      <div class="stat-card green"><div class="stat-label">Other Platforms</div><div class="stat-value" id="other-total">₹0</div><div class="stat-sub">This month</div></div>
+      <div class="stat-card gold"><div class="stat-label">Total Affiliate</div><div class="stat-value" id="affiliate-total">₹0</div><div class="stat-sub">All platforms</div></div>
+    </div>
+    <div class="table-box">
+      <div class="table-header"><h3>Earning Entries</h3></div>
+      <table><thead><tr><th>Date</th><th>Platform</th><th>Amount</th><th>Note</th><th>Actions</th></tr></thead>
+      <tbody id="earnings-table"><tr><td colspan="5" style="text-align:center;color:var(--gray);padding:32px;">No entries yet. Click "Add Entry" to track your earnings!</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <!-- ══ CHANGE PASSWORD ══ -->
+  <div class="page" id="page-password">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Change Password</div>
+        <div class="page-sub">Update your admin account password</div>
+      </div>
+    </div>
+    <div style="max-width:480px;">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:32px;">
+        <div id="password-alert"></div>
+        <div class="form-grid" style="gap:16px;">
+          <div class="form-group full"><label>Current Password</label><input type="password" id="current-password" placeholder="Enter current password"/></div>
+          <div class="form-group full"><label>New Password</label><input type="password" id="new-password" placeholder="Enter new password (min 6 characters)"/></div>
+          <div class="form-group full"><label>Confirm New Password</label><input type="password" id="confirm-password" placeholder="Repeat new password"/></div>
+        </div>
+        <button class="btn btn-gold" style="width:100%;padding:14px;margin-top:8px;" onclick="changePassword()"><i class="ti ti-lock"></i> Change Password</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SITE SETTINGS ══ -->
+  <div class="page" id="page-settings">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Site Settings</div>
+        <div class="page-sub">Manage your website settings and configurations.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:24px;">
+        <h3 style="font-size:15px;margin-bottom:20px;color:var(--gold);">Store Info</h3>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="form-group"><label>Store Name</label><input type="text" value="MCW — Men Clothing Wear" placeholder="Store name"/></div>
+          <div class="form-group"><label>Store Tagline</label><input type="text" value="Bold fits for the modern man" placeholder="Tagline"/></div>
+          <div class="form-group"><label>Contact Email</label><input type="email" value="admin@mcw.com" placeholder="Contact email"/></div>
+          <div class="form-group"><label>Instagram Handle</label><input type="text" placeholder="@yourhandle"/></div>
+        </div>
+        <button class="btn btn-gold" style="margin-top:16px;" onclick="showNotif('✅ Settings saved! Push to GitHub to apply.')"><i class="ti ti-check"></i> Save</button>
+      </div>
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:24px;">
+        <h3 style="font-size:15px;margin-bottom:20px;color:var(--gold);">Important Links</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="https://affiliate-program.amazon.in/home" target="_blank" class="btn btn-outline" style="justify-content:center;"><i class="ti ti-brand-amazon"></i> Amazon Associates Dashboard</a>
+          <a href="https://www.cuelinks.com" target="_blank" class="btn btn-outline" style="justify-content:center;"><i class="ti ti-link"></i> Cuelinks Dashboard</a>
+          <a href="https://dashboard.render.com" target="_blank" class="btn btn-outline" style="justify-content:center;"><i class="ti ti-server"></i> Render Dashboard</a>
+          <a href="https://cloud.mongodb.com" target="_blank" class="btn btn-outline" style="justify-content:center;"><i class="ti ti-database"></i> MongoDB Atlas</a>
+          <a href="https://dashboard.uptimerobot.com" target="_blank" class="btn btn-outline" style="justify-content:center;"><i class="ti ti-activity"></i> UptimeRobot Monitor</a>
+          <a href="https://github.com/azeemabdul4838/mcw-v2" target="_blank" class="btn btn-outline" style="justify-content:center;"><i class="ti ti-brand-github"></i> GitHub Repository</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -248,70 +526,99 @@
     <button class="modal-close" onclick="closeProductModal()">✕</button>
     <h3 id="modal-title">Add New Product</h3>
     <div id="modal-alert"></div>
-
     <div class="type-toggle">
       <button class="type-btn active" id="type-own" onclick="setProductType('own')"><i class="ti ti-shirt"></i> My Own Product</button>
       <button class="type-btn" id="type-affiliate" onclick="setProductType('affiliate')"><i class="ti ti-link"></i> Affiliate Product</button>
     </div>
-
-    <div class="form-grid">
+    <div class="form-grid" style="gap:16px;">
       <div class="form-group"><label>Product Name</label><input type="text" id="p-name" placeholder="e.g. Urban Drop Tee"/></div>
       <div class="form-group"><label>Category</label>
         <select id="p-category">
-          <option>T-Shirts</option>
-          <option>Jackets</option>
-          <option>Hoodies</option>
-          <option>Joggers</option>
-          <option>Pants</option>
-          <option>Jeans</option>
-          <option>Formal Pants</option>
-          <option>Shorts</option>
-          <option>Sneakers</option>
-          <option>Shoes</option>
-          <option>Accessories</option>
-          <option>Watches</option>
-          <option>Bags</option>
+          <option>T-Shirts</option><option>Jackets</option><option>Hoodies</option>
+          <option>Shoes</option><option>Accessories</option>
+          <option>Bootcut</option><option>Baggy</option><option>Straight</option>
+          <option>Tracks</option><option>Formals</option><option>Joggers</option>
         </select>
       </div>
       <div class="form-group"><label>Price (₹)</label><input type="number" id="p-price" placeholder="899"/></div>
-      <div class="form-group"><label>Original Price (₹) — for strikethrough</label><input type="number" id="p-original" placeholder="1299"/></div>
+      <div class="form-group"><label>Original Price (₹) — strikethrough</label><input type="number" id="p-original" placeholder="1299"/></div>
       <div class="form-group"><label>Tag</label>
         <select id="p-tag"><option value="">None</option><option>Hot</option><option>New</option><option>Sale</option><option>Trending</option></select>
       </div>
       <div class="form-group"><label>Stock Quantity</label><input type="number" id="p-stock" placeholder="100"/></div>
       <div class="form-group full"><label>Description</label><textarea id="p-desc" placeholder="Brief product description..."></textarea></div>
-      <div class="form-group full"><label>Image URL (optional)</label><input type="text" id="p-image" placeholder="https://... or leave blank"/></div>
-
+      <div class="form-group full"><label>Image URL</label><input type="text" id="p-image" placeholder="https://... (Amazon image URL or leave blank)"/></div>
       <!-- AFFILIATE FIELDS -->
       <div class="form-group" id="aff-platform-group" style="display:none;"><label>Platform</label>
-        <select id="p-platform" onchange="toggleCustomPlatform(this.value)">
-          <option value="amazon">Amazon India</option>
-          <option value="myntra">Myntra</option>
-          <option value="flipkart">Flipkart</option>
-          <option value="meesho">Meesho</option>
-          <option value="ajio">AJIO</option>
-          <option value="nykaa">Nykaa Fashion</option>
-          <option value="custom">Custom / Other</option>
-        </select>
-      </div>
-      <div class="form-group" id="aff-custom-platform-group" style="display:none;"><label>Custom Platform Name</label>
-        <input type="text" id="p-custom-platform" placeholder="e.g. Urbanic, Bewakoof, Snitch..."/>
+        <select id="p-platform"><option value="amazon">Amazon India</option><option value="myntra">Myntra</option><option value="flipkart">Flipkart</option><option value="ajio">Ajio</option><option value="nykaa">Nykaa</option><option value="other">Other</option></select>
       </div>
       <div class="form-group" id="aff-commission-group" style="display:none;"><label>Commission %</label><input type="text" id="p-commission" placeholder="e.g. 9%"/></div>
-      <div class="form-group full" id="aff-url-group" style="display:none;"><label>Affiliate Link (your unique URL from Amazon/Myntra/Flipkart)</label><input type="text" id="p-url" placeholder="https://www.amazon.in/dp/...?tag=yourtag-21"/></div>
+      <div class="form-group full" id="aff-url-group" style="display:none;"><label>Affiliate Link (your unique URL)</label><input type="text" id="p-url" placeholder="https://www.amazon.in/dp/...?tag=mcwfashion-21"/></div>
     </div>
-
     <input type="hidden" id="p-id"/>
     <input type="hidden" id="p-type" value="own"/>
-    <button class="btn btn-gold" style="width:100%;padding:12px;margin-top:8px;" onclick="saveProduct()">Save Product</button>
+    <div style="display:flex;gap:8px;margin-top:20px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeProductModal()">Cancel</button>
+      <button class="btn btn-gold" style="flex:2;" onclick="saveProduct()"><i class="ti ti-check"></i> Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG MODAL -->
+<div class="modal-overlay" id="blog-modal">
+  <div class="modal" style="max-width:680px;">
+    <button class="modal-close" onclick="closeBlogModal()">✕</button>
+    <h3 id="blog-modal-title">Write New Blog Post</h3>
+    <div id="blog-modal-alert"></div>
+    <div class="form-grid" style="gap:16px;">
+      <div class="form-group full"><label>Post Title</label><input type="text" id="b-title" placeholder="e.g. Best Hoodies for Men Under ₹2000 in 2026"/></div>
+      <div class="form-group"><label>Category</label>
+        <select id="b-category">
+          <option>Style Tips</option><option>Buying Guide</option><option>Product Review</option>
+          <option>Trend Report</option><option>Brand Review</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Status</label>
+        <select id="b-published"><option value="true">Published</option><option value="false">Draft</option></select>
+      </div>
+      <div class="form-group full"><label>Excerpt (short summary shown on blog cards)</label><textarea id="b-excerpt" placeholder="A short 1-2 line summary of your post..." style="min-height:60px;"></textarea></div>
+      <div class="form-group full"><label>Full Content (you can add affiliate links as HTML here)</label><textarea id="b-content" placeholder="Write your full blog post here... You can add affiliate links like: &lt;a href='YOUR_LINK'&gt;Buy on Amazon&lt;/a&gt;" style="min-height:180px;"></textarea></div>
+      <div class="form-group full"><label>Cover Image URL (optional)</label><input type="text" id="b-image" placeholder="https://..."/></div>
+    </div>
+    <input type="hidden" id="b-id"/>
+    <div style="display:flex;gap:8px;margin-top:20px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeBlogModal()">Cancel</button>
+      <button class="btn btn-gold" style="flex:2;" onclick="saveBlog()"><i class="ti ti-pencil"></i> Save Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- EARNING ENTRY MODAL -->
+<div class="modal-overlay" id="earning-modal">
+  <div class="modal" style="max-width:440px;">
+    <button class="modal-close" onclick="closeEarningModal()">✕</button>
+    <h3>Add Earning Entry</h3>
+    <div class="form-grid" style="gap:16px;">
+      <div class="form-group"><label>Platform</label>
+        <select id="e-platform"><option value="amazon">Amazon</option><option value="myntra">Myntra</option><option value="flipkart">Flipkart</option><option value="other">Other</option></select>
+      </div>
+      <div class="form-group"><label>Amount (₹)</label><input type="number" id="e-amount" placeholder="e.g. 540"/></div>
+      <div class="form-group"><label>Date</label><input type="date" id="e-date"/></div>
+      <div class="form-group"><label>Note (optional)</label><input type="text" id="e-note" placeholder="e.g. 6 jacket sales"/></div>
+    </div>
+    <button class="btn btn-gold" style="width:100%;margin-top:20px;" onclick="saveEarningEntry()"><i class="ti ti-check"></i> Add Entry</button>
   </div>
 </div>
 
 <script>
 const API = 'https://mcw-v2.onrender.com/api';
 let adminUser = null;
+let allProducts = [];
+let allOrders = [];
+let allCustomers = [];
+let earningEntries = JSON.parse(localStorage.getItem('mcw_earnings') || '[]');
 
-// ── LOGIN ─────────────────────────────────────────────────────
+// ── LOGIN ──────────────────────────────────────────────────────
 async function adminLogin() {
   const email    = document.getElementById('admin-email').value.trim();
   const password = document.getElementById('admin-password').value;
@@ -325,124 +632,88 @@ async function adminLogin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-panel').style.display  = 'flex';
     loadDashboard();
-  } catch(e) { alertEl.innerHTML = `<div class="alert alert-error">Server not running. Start with: node server.js</div>`; }
+  } catch(e) { alertEl.innerHTML = `<div class="alert alert-error">Cannot connect to server.</div>`; }
 }
-async function changePassword() {
-  const current = document.getElementById('current-password').value;
-  const newPass = document.getElementById('new-password').value;
-  const confirm = document.getElementById('confirm-password').value;
-  const alertEl = document.getElementById('password-alert');
-
-  if (!current || !newPass || !confirm) {
-    alertEl.innerHTML = '<div class="alert alert-error">Please fill in all fields!</div>';
-    return;
-  }
-  if (newPass !== confirm) {
-    alertEl.innerHTML = '<div class="alert alert-error">New passwords do not match!</div>';
-    return;
-  }
-  if (newPass.length < 6) {
-    alertEl.innerHTML = '<div class="alert alert-error">New password must be at least 6 characters!</div>';
-    return;
-  }
-
-  try {
-    const res = await fetch(`${API}/admin/change-password`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ currentPassword: current, newPassword: newPass })
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      alertEl.innerHTML = `<div class="alert alert-error">${data.error}</div>`;
-    } else {
-      alertEl.innerHTML = '<div class="alert alert-success">✅ Password changed successfully!</div>';
-      document.getElementById('current-password').value = '';
-      document.getElementById('new-password').value = '';
-      document.getElementById('confirm-password').value = '';
-    }
-  } catch (err) {
-    alertEl.innerHTML = '<div class="alert alert-error">Something went wrong. Try again!</div>';
-  }
-}
-
-async function adminLogout() {
-  await fetch(`${API}/auth/logout`, { method:'POST', credentials:'include' });
-  location.reload();
-}
-function goToSite() { window.open('https://mcw-v2.onrender.com','_blank'); }
 
 // ── NAV ───────────────────────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById(`page-${name}`).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => { if (n.textContent.trim().toLowerCase().includes(name)) n.classList.add('active'); });
-  if (name === 'dashboard') loadDashboard();
-  if (name === 'products')  loadProducts();
-  if (name === 'orders')    loadOrders();
-  if (name === 'customers') loadCustomers();
+  document.querySelectorAll('.nav-item').forEach(n => { if (n.textContent.trim().toLowerCase().includes(name.toLowerCase())) n.classList.add('active'); });
+  if (name==='dashboard') loadDashboard();
+  if (name==='products')  loadProducts();
+  if (name==='orders')    loadOrders();
+  if (name==='customers') loadCustomers();
+  if (name==='blogs')     loadBlogs();
+  if (name==='earnings')  renderEarnings();
 }
 
 // ── DASHBOARD ─────────────────────────────────────────────────
 async function loadDashboard() {
-  const res  = await fetch(`${API}/admin/stats`, { credentials:'include' });
-  const data = await res.json();
-  document.getElementById('stat-revenue').textContent   = '₹' + (data.totalRevenue || 0).toLocaleString();
-  document.getElementById('stat-orders').textContent    = data.totalOrders || 0;
-  document.getElementById('stat-customers').textContent = data.totalCustomers || 0;
-  document.getElementById('stat-products').textContent  = data.totalProducts || 0;
-  const tbody = document.getElementById('recent-orders-table');
-  tbody.innerHTML = (data.recentOrders || []).map(o => `
-    <tr>
-      <td style="color:var(--gold);font-family:monospace;">#${o._id.slice(-6).toUpperCase()}</td>
-      <td>${o.user?.name || o.guestEmail || 'Guest'}</td>
-      <td>₹${o.total.toLocaleString()}</td>
-      <td><span class="badge badge-${o.status}">${o.status.toUpperCase()}</span></td>
-      <td style="color:var(--gray);">${new Date(o.createdAt).toLocaleDateString()}</td>
-    </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:32px;">No orders yet</td></tr>';
+  try {
+    const res  = await fetch(`${API}/admin/stats`, { credentials:'include' });
+    const data = await res.json();
+    document.getElementById('stat-revenue').textContent   = '₹' + (data.totalRevenue || 0).toLocaleString();
+    document.getElementById('stat-orders').textContent    = data.totalOrders || 0;
+    document.getElementById('stat-customers').textContent = data.totalCustomers || 0;
+    document.getElementById('stat-products').textContent  = data.totalProducts || 0;
+    document.getElementById('stat-blogs').textContent     = data.totalBlogs || 0;
+    document.getElementById('stat-paid').textContent      = data.paidOrders || 0;
+    const tbody = document.getElementById('recent-orders-table');
+    tbody.innerHTML = (data.recentOrders || []).map(o => `
+      <tr>
+        <td style="color:var(--gold);font-family:monospace;">#${o._id.slice(-6).toUpperCase()}</td>
+        <td>${o.user?.name || 'Guest'}</td>
+        <td>₹${o.total.toLocaleString()}</td>
+        <td><span class="badge badge-${o.status}">${o.status.toUpperCase()}</span></td>
+      </tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px;">No orders yet</td></tr>';
+  } catch(e) { console.log('Dashboard error:', e); }
 }
 
 // ── PRODUCTS ──────────────────────────────────────────────────
 async function loadProducts() {
   const res  = await fetch(`${API}/admin/products`, { credentials:'include' });
-  const data = await res.json();
-  document.getElementById('product-count').textContent = data.length + ' products';
-  const tbody = document.getElementById('products-table');
-  tbody.innerHTML = data.map(p => `
-    <tr>
-      <td><strong>${p.name}</strong></td>
-      <td style="color:var(--gray);">${p.category}</td>
-      <td style="color:var(--gold);">₹${p.price.toLocaleString()}</td>
-      <td><span class="badge badge-${p.type}">${p.type === 'affiliate' ? '🔗 Affiliate' : '🏷️ Own'}</span></td>
-      <td>${p.type === 'affiliate' ? '—' : p.stock}</td>
-      <td>
-        <button class="btn btn-outline btn-sm" onclick="editProduct('${p._id}')">Edit</button>
-        <button class="btn btn-red btn-sm" onclick="deleteProduct('${p._id}')">Remove</button>
-      </td>
-    </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:32px;">No products yet — add your first one!</td></tr>';
+  allProducts = await res.json();
+  renderProducts(allProducts);
 }
 
-function toggleCustomPlatform(val) {
-  const customGroup = document.getElementById('aff-custom-platform-group');
-  customGroup.style.display = val === 'custom' ? 'block' : 'none';
+function renderProducts(products) {
+  document.getElementById('product-count').textContent = products.length + ' products';
+  const tbody = document.getElementById('products-table');
+  tbody.innerHTML = products.map(p => `
+    <tr>
+      <td>${p.image ? `<img src="${p.image}" class="img-preview" onerror="this.style.display='none'"/>` : '<div style="width:40px;height:40px;background:var(--dark3);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="ti ti-shirt" style="color:var(--gold);"></i></div>'}</td>
+      <td><strong>${p.name}</strong>${p.tag ? `<br><span class="badge badge-pending" style="font-size:10px;">${p.tag}</span>` : ''}</td>
+      <td style="color:var(--gray);">${p.category}</td>
+      <td style="color:var(--gold);">₹${p.price.toLocaleString()}${p.originalPrice ? `<br><span style="color:#555;font-size:11px;text-decoration:line-through;">₹${p.originalPrice}</span>` : ''}</td>
+      <td><span class="badge badge-${p.type}">${p.type === 'affiliate' ? '🔗 Affiliate' : '🏷️ Own'}</span></td>
+      <td>${p.type === 'affiliate' ? '—' : p.stock}</td>
+      <td><span class="badge badge-${p.active ? 'paid' : 'cancelled'}">${p.active ? 'Active' : 'Hidden'}</span></td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="editProduct('${p._id}')"><i class="ti ti-edit"></i></button>
+        <button class="btn btn-blue btn-sm" onclick="toggleProduct('${p._id}')"><i class="ti ti-eye"></i></button>
+        <button class="btn btn-red btn-sm" onclick="deleteProduct('${p._id}')"><i class="ti ti-trash"></i></button>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:32px;">No products yet — add your first one!</td></tr>';
+}
+
+function filterProducts(type) {
+  if (!type) renderProducts(allProducts);
+  else renderProducts(allProducts.filter(p => p.type === type));
+}
+
+function searchProducts(query) {
+  const q = query.toLowerCase();
+  renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
 }
 
 function openProductModal(type = 'own') {
-  document.getElementById('p-id').value = '';
-  document.getElementById('p-name').value = '';
-  document.getElementById('p-price').value = '';
-  document.getElementById('p-original').value = '';
-  document.getElementById('p-desc').value = '';
-  document.getElementById('p-image').value = '';
-  document.getElementById('p-url').value = '';
-  document.getElementById('p-commission').value = '';
+  ['p-id','p-name','p-price','p-original','p-desc','p-image','p-url','p-commission'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
   document.getElementById('p-stock').value = '100';
+  document.getElementById('p-tag').value = '';
   document.getElementById('modal-title').textContent = 'Add New Product';
   document.getElementById('modal-alert').innerHTML = '';
-  document.getElementById('aff-custom-platform-group').style.display = 'none';
-  document.getElementById('p-custom-platform').value = '';
   setProductType(type);
   document.getElementById('product-modal').classList.add('open');
 }
@@ -453,9 +724,7 @@ function setProductType(type) {
   document.getElementById('type-own').classList.toggle('active', type === 'own');
   document.getElementById('type-affiliate').classList.toggle('active', type === 'affiliate');
   const isAff = type === 'affiliate';
-  document.getElementById('aff-platform-group').style.display   = isAff ? 'block' : 'none';
-  document.getElementById('aff-commission-group').style.display = isAff ? 'block' : 'none';
-  document.getElementById('aff-url-group').style.display        = isAff ? 'block' : 'none';
+  ['aff-platform-group','aff-commission-group','aff-url-group'].forEach(id => document.getElementById(id).style.display = isAff ? 'block' : 'none');
 }
 
 async function editProduct(id) {
@@ -474,17 +743,7 @@ async function editProduct(id) {
   document.getElementById('p-commission').value  = p.affiliateCommission || '';
   document.getElementById('modal-title').textContent = 'Edit Product';
   setProductType(p.type || 'own');
-  if (p.affiliatePlatform) {
-    const knownPlatforms = ['amazon','myntra','flipkart','meesho','ajio','nykaa'];
-    if (knownPlatforms.includes(p.affiliatePlatform)) {
-      document.getElementById('p-platform').value = p.affiliatePlatform;
-      document.getElementById('aff-custom-platform-group').style.display = 'none';
-    } else {
-      document.getElementById('p-platform').value = 'custom';
-      document.getElementById('p-custom-platform').value = p.affiliatePlatform;
-      document.getElementById('aff-custom-platform-group').style.display = 'block';
-    }
-  }
+  if (p.affiliatePlatform) document.getElementById('p-platform').value = p.affiliatePlatform;
   document.getElementById('product-modal').classList.add('open');
 }
 
@@ -502,9 +761,7 @@ async function saveProduct() {
     image: document.getElementById('p-image').value,
     type,
     ...(type === 'affiliate' ? {
-      affiliatePlatform: document.getElementById('p-platform').value === 'custom'
-        ? document.getElementById('p-custom-platform').value.toLowerCase().trim()
-        : document.getElementById('p-platform').value,
+      affiliatePlatform: document.getElementById('p-platform').value,
       affiliateUrl: document.getElementById('p-url').value,
       affiliateCommission: document.getElementById('p-commission').value
     } : {})
@@ -517,63 +774,284 @@ async function saveProduct() {
   if (!res.ok) { document.getElementById('modal-alert').innerHTML = `<div class="alert alert-error">${data.error}</div>`; return; }
   closeProductModal();
   loadProducts();
-  showAlert('products-alert', '✅ Product saved successfully!', 'success');
+  showNotif('✅ Product saved successfully!');
 }
 
 async function deleteProduct(id) {
-  if (!confirm('Remove this product?')) return;
+  if (!confirm('Permanently delete this product?')) return;
   const res = await fetch(`${API}/products/${id}`, { method:'DELETE', credentials:'include' });
-  if (res.ok) { loadProducts(); showAlert('products-alert', '✅ Product removed.', 'success'); }
+  if (res.ok) { loadProducts(); showNotif('🗑️ Product deleted.'); }
+}
+
+async function toggleProduct(id) {
+  const res = await fetch(`${API}/products/${id}/toggle`, { method:'PATCH', credentials:'include' });
+  const data = await res.json();
+  if (res.ok) { loadProducts(); showNotif(data.active ? '👁️ Product is now visible.' : '🚫 Product is now hidden.'); }
 }
 
 // ── ORDERS ────────────────────────────────────────────────────
 async function loadOrders() {
   const res  = await fetch(`${API}/admin/orders`, { credentials:'include' });
-  const data = await res.json();
+  allOrders = await res.json();
+  renderOrders(allOrders);
+}
+
+function renderOrders(orders) {
   const tbody = document.getElementById('orders-table');
-  tbody.innerHTML = data.map(o => `
+  tbody.innerHTML = orders.map(o => `
     <tr>
       <td style="color:var(--gold);font-family:monospace;">#${o._id.slice(-6).toUpperCase()}</td>
       <td>${o.user?.name || o.guestEmail || 'Guest'}<br><span style="color:var(--gray);font-size:11px;">${o.user?.email || ''}</span></td>
-      <td style="color:var(--gray);">${o.items?.length || 0} item(s)</td>
-      <td>₹${o.total.toLocaleString()}</td>
+      <td style="color:var(--gray);">${o.items?.map(i => i.name).join(', ').substring(0,40) || '—'}...</td>
+      <td style="color:var(--gold);">₹${o.total.toLocaleString()}</td>
       <td>
         <select class="status-select" onchange="updateOrderStatus('${o._id}', this.value)">
           ${['pending','paid','shipped','delivered','cancelled'].map(s => `<option value="${s}" ${o.status===s?'selected':''}>${s.toUpperCase()}</option>`).join('')}
         </select>
       </td>
       <td style="color:var(--gray);">${new Date(o.createdAt).toLocaleDateString()}</td>
-    </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:32px;">No orders yet</td></tr>';
+      <td><button class="btn btn-outline btn-sm" onclick="viewOrder('${o._id}')"><i class="ti ti-eye"></i></button></td>
+    </tr>`).join('') || '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:32px;">No orders yet</td></tr>';
+}
+
+function filterOrders(status) {
+  if (!status) renderOrders(allOrders);
+  else renderOrders(allOrders.filter(o => o.status === status));
+}
+
+function searchOrders(query) {
+  const q = query.toLowerCase();
+  renderOrders(allOrders.filter(o => o._id.includes(q) || (o.user?.name || '').toLowerCase().includes(q)));
 }
 
 async function updateOrderStatus(id, status) {
   await fetch(`${API}/admin/orders/${id}`, { method:'PUT', credentials:'include', headers:{'Content-Type':'application/json'}, body:JSON.stringify({status}) });
+  showNotif('✅ Order status updated!');
+}
+
+function viewOrder(id) {
+  const o = allOrders.find(x => x._id === id);
+  if (!o) return;
+  alert(`Order #${o._id.slice(-6).toUpperCase()}\nCustomer: ${o.user?.name || 'Guest'}\nItems: ${o.items?.map(i => `${i.name} x${i.qty}`).join(', ')}\nTotal: ₹${o.total}\nStatus: ${o.status}\nDate: ${new Date(o.createdAt).toLocaleString()}`);
 }
 
 // ── CUSTOMERS ─────────────────────────────────────────────────
 async function loadCustomers() {
   const res  = await fetch(`${API}/admin/customers`, { credentials:'include' });
-  const data = await res.json();
+  allCustomers = await res.json();
+  renderCustomers(allCustomers);
+}
+
+function renderCustomers(customers) {
   const tbody = document.getElementById('customers-table');
-  tbody.innerHTML = data.map(c => `
+  tbody.innerHTML = customers.map(c => `
     <tr>
       <td><strong>${c.name}</strong></td>
       <td style="color:var(--gray);">${c.email}</td>
       <td style="color:var(--gray);">${c.phone || '—'}</td>
-      <td>${c.bankLinked ? `<span class="badge badge-paid">✅ Linked (${c.bankName || ''})</span>` : '<span class="badge badge-pending">Not Linked</span>'}</td>
       <td style="color:var(--gray);">${new Date(c.createdAt).toLocaleDateString()}</td>
+      <td><button class="btn btn-outline btn-sm" onclick="emailCustomer('${c.email}')"><i class="ti ti-mail"></i> Email</button></td>
     </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:32px;">No customers yet</td></tr>';
 }
 
+function searchCustomers(query) {
+  const q = query.toLowerCase();
+  renderCustomers(allCustomers.filter(c => c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q)));
+}
+
+function emailCustomer(email) { window.open(`mailto:${email}`); }
+
+// ── BLOGS ─────────────────────────────────────────────────────
+async function loadBlogs() {
+  try {
+    const res  = await fetch(`${API}/admin/blogs`, { credentials:'include' });
+    const data = await res.json();
+    const tbody = document.getElementById('blogs-table');
+    tbody.innerHTML = data.map(b => `
+      <tr>
+        <td><strong>${b.title}</strong></td>
+        <td style="color:var(--gray);">${b.category}</td>
+        <td><span class="badge badge-${b.published ? 'paid' : 'pending'}">${b.published ? 'Published' : 'Draft'}</span></td>
+        <td style="color:var(--gray);">${new Date(b.createdAt).toLocaleDateString()}</td>
+        <td>
+          <button class="btn btn-outline btn-sm" onclick="editBlog('${b._id}')"><i class="ti ti-edit"></i> Edit</button>
+          <button class="btn btn-red btn-sm" onclick="deleteBlog('${b._id}')"><i class="ti ti-trash"></i></button>
+        </td>
+      </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:32px;">No blog posts yet. Write your first post!</td></tr>';
+  } catch(e) {}
+}
+
+function openBlogModal() {
+  ['b-id','b-title','b-excerpt','b-content','b-image'].forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('b-published').value = 'true';
+  document.getElementById('blog-modal-title').textContent = 'Write New Blog Post';
+  document.getElementById('blog-modal-alert').innerHTML = '';
+  document.getElementById('blog-modal').classList.add('open');
+}
+function closeBlogModal() { document.getElementById('blog-modal').classList.remove('open'); }
+
+async function editBlog(id) {
+  const res = await fetch(`${API}/admin/blogs`, { credentials:'include' });
+  const blogs = await res.json();
+  const b = blogs.find(x => x._id === id);
+  if (!b) return;
+  document.getElementById('b-id').value       = b._id;
+  document.getElementById('b-title').value    = b.title;
+  document.getElementById('b-category').value = b.category;
+  document.getElementById('b-published').value= b.published ? 'true' : 'false';
+  document.getElementById('b-excerpt').value  = b.excerpt || '';
+  document.getElementById('b-content').value  = b.content || '';
+  document.getElementById('b-image').value    = b.image || '';
+  document.getElementById('blog-modal-title').textContent = 'Edit Blog Post';
+  document.getElementById('blog-modal').classList.add('open');
+}
+
+async function saveBlog() {
+  const id = document.getElementById('b-id').value;
+  const body = {
+    title: document.getElementById('b-title').value.trim(),
+    category: document.getElementById('b-category').value,
+    published: document.getElementById('b-published').value === 'true',
+    excerpt: document.getElementById('b-excerpt').value,
+    content: document.getElementById('b-content').value,
+    image: document.getElementById('b-image').value,
+  };
+  if (!body.title) { document.getElementById('blog-modal-alert').innerHTML = '<div class="alert alert-error">Title is required!</div>'; return; }
+  const url    = id ? `${API}/blogs/${id}` : `${API}/blogs`;
+  const method = id ? 'PUT' : 'POST';
+  const res    = await fetch(url, { method, credentials:'include', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  const data   = await res.json();
+  if (!res.ok) { document.getElementById('blog-modal-alert').innerHTML = `<div class="alert alert-error">${data.error}</div>`; return; }
+  closeBlogModal();
+  loadBlogs();
+  showNotif('✅ Blog post saved!');
+}
+
+async function deleteBlog(id) {
+  if (!confirm('Delete this blog post?')) return;
+  const res = await fetch(`${API}/blogs/${id}`, { method:'DELETE', credentials:'include' });
+  if (res.ok) { loadBlogs(); showNotif('🗑️ Blog post deleted.'); }
+}
+
+// ── CATEGORIES ────────────────────────────────────────────────
+function addCategory() {
+  const val = document.getElementById('new-category').value.trim();
+  if (!val) return;
+  const div = document.createElement('div');
+  div.className = 'cat-tag';
+  div.innerHTML = `<i class="ti ti-tag"></i> ${val} <button onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('main-categories').appendChild(div);
+  document.getElementById('new-category').value = '';
+  showNotif(`✅ "${val}" added! Update index.html to apply.`);
+}
+
+function addPantsCat() {
+  const val = document.getElementById('new-pants-cat').value.trim();
+  if (!val) return;
+  const div = document.createElement('div');
+  div.className = 'cat-tag';
+  div.innerHTML = `${val} <button onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('pants-categories').appendChild(div);
+  document.getElementById('new-pants-cat').value = '';
+  showNotif(`✅ "${val}" added! Update index.html to apply.`);
+}
+
+function removeCategory(name) { showNotif(`ℹ️ Remove "${name}" from index.html to apply on site.`); }
+function removePantsCat(name) { showNotif(`ℹ️ Remove "${name}" from index.html to apply on site.`); }
+
+// ── EARNINGS ──────────────────────────────────────────────────
+function addEarningEntry() {
+  document.getElementById('e-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('earning-modal').classList.add('open');
+}
+function closeEarningModal() { document.getElementById('earning-modal').classList.remove('open'); }
+
+function saveEarningEntry() {
+  const entry = {
+    id: Date.now(),
+    platform: document.getElementById('e-platform').value,
+    amount: parseFloat(document.getElementById('e-amount').value) || 0,
+    date: document.getElementById('e-date').value,
+    note: document.getElementById('e-note').value
+  };
+  earningEntries.push(entry);
+  localStorage.setItem('mcw_earnings', JSON.stringify(earningEntries));
+  closeEarningModal();
+  renderEarnings();
+  showNotif('✅ Earning entry added!');
+}
+
+function renderEarnings() {
+  const amazon = earningEntries.filter(e => e.platform === 'amazon').reduce((s,e) => s + e.amount, 0);
+  const myntra = earningEntries.filter(e => e.platform === 'myntra').reduce((s,e) => s + e.amount, 0);
+  const other  = earningEntries.filter(e => !['amazon','myntra'].includes(e.platform)).reduce((s,e) => s + e.amount, 0);
+  document.getElementById('amazon-total').textContent = '₹' + amazon.toLocaleString();
+  document.getElementById('myntra-total').textContent = '₹' + myntra.toLocaleString();
+  document.getElementById('other-total').textContent  = '₹' + other.toLocaleString();
+  document.getElementById('affiliate-total').textContent = '₹' + (amazon + myntra + other).toLocaleString();
+  const tbody = document.getElementById('earnings-table');
+  if (earningEntries.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:32px;">No entries yet. Click "Add Entry" to track your earnings!</td></tr>'; return; }
+  tbody.innerHTML = [...earningEntries].reverse().map(e => `
+    <tr>
+      <td style="color:var(--gray);">${e.date}</td>
+      <td><span class="badge badge-${e.platform === 'amazon' ? 'paid' : 'affiliate'}">${e.platform.toUpperCase()}</span></td>
+      <td style="color:var(--gold);">₹${e.amount.toLocaleString()}</td>
+      <td style="color:var(--gray);">${e.note || '—'}</td>
+      <td><button class="btn btn-red btn-sm" onclick="deleteEarning(${e.id})"><i class="ti ti-trash"></i></button></td>
+    </tr>`).join('');
+}
+
+function deleteEarning(id) {
+  earningEntries = earningEntries.filter(e => e.id !== id);
+  localStorage.setItem('mcw_earnings', JSON.stringify(earningEntries));
+  renderEarnings();
+}
+
+// ── BANNERS ───────────────────────────────────────────────────
+function saveBannerSettings() {
+  showAlert('banner-alert', '✅ Settings noted! Update index.html and push to GitHub to apply on live site.', 'info');
+}
+
+// ── CHANGE PASSWORD ───────────────────────────────────────────
+async function changePassword() {
+  const current = document.getElementById('current-password').value;
+  const newPass = document.getElementById('new-password').value;
+  const confirm = document.getElementById('confirm-password').value;
+  const alertEl = document.getElementById('password-alert');
+  if (!current || !newPass || !confirm) { alertEl.innerHTML = '<div class="alert alert-error">Please fill in all fields!</div>'; return; }
+  if (newPass !== confirm) { alertEl.innerHTML = '<div class="alert alert-error">New passwords do not match!</div>'; return; }
+  if (newPass.length < 6) { alertEl.innerHTML = '<div class="alert alert-error">Password must be at least 6 characters!</div>'; return; }
+  try {
+    const res = await fetch(`${API}/admin/change-password`, { method:'POST', credentials:'include', headers:{'Content-Type':'application/json'}, body:JSON.stringify({currentPassword:current,newPassword:newPass}) });
+    const data = await res.json();
+    if (!res.ok) { alertEl.innerHTML = `<div class="alert alert-error">${data.error}</div>`; return; }
+    alertEl.innerHTML = '<div class="alert alert-success">✅ Password changed successfully!</div>';
+    ['current-password','new-password','confirm-password'].forEach(id => document.getElementById(id).value = '');
+  } catch(err) { alertEl.innerHTML = '<div class="alert alert-error">Something went wrong.</div>'; }
+}
+
 // ── UTILS ─────────────────────────────────────────────────────
+async function adminLogout() { await fetch(`${API}/auth/logout`, { method:'POST', credentials:'include' }); location.reload(); }
+function goToSite() { window.open('https://mcw-v2.onrender.com','_blank'); }
+
+function showNotif(msg) {
+  const existing = document.querySelector('.notif');
+  if (existing) existing.remove();
+  const el = document.createElement('div');
+  el.className = 'notif';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
 function showAlert(id, msg, type) {
   const el = document.getElementById(id);
   if (!el) return;
   el.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
-  setTimeout(() => { el.innerHTML = ''; }, 4000);
+  setTimeout(() => { el.innerHTML = ''; }, 5000);
 }
 
-// Auto-check if already logged in
+// ── AUTO LOGIN ────────────────────────────────────────────────
 window.onload = async () => {
   try {
     const res = await fetch(`${API}/auth/me`, { credentials:'include' });

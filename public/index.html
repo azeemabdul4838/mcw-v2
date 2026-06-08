@@ -381,13 +381,13 @@
 
     <!-- QUICK CATEGORY ACCESS — visible without scrolling -->
     <div class="hero-categories">
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
-      <div class="hero-cat" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'});filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
+      <div class="hero-cat" onclick="filterByCategory('Shirts')"><i class="ti ti-shirt-sport"></i><span>Shirts</span></div>
+      <div class="hero-cat" onclick="filterByCategory('T-Shirts')"><i class="ti ti-shirt"></i><span>T-Shirts</span></div>
+      <div class="hero-cat" onclick="filterByCategory('Jackets')"><i class="ti ti-jacket"></i><span>Jackets</span></div>
+      <div class="hero-cat" onclick="filterByCategory('Hoodies')"><i class="ti ti-hanger"></i><span>Hoodies</span></div>
+      <div class="hero-cat" onclick="filterByCategory('Pants')"><i class="ti ti-wash-dry-2"></i><span>Pants</span></div>
+      <div class="hero-cat" onclick="filterByCategory('Shoes')"><i class="ti ti-shoe"></i><span>Shoes</span></div>
+      <div class="hero-cat" onclick="filterByCategory('Accessories')"><i class="ti ti-watch"></i><span>Accessories</span></div>
     </div>
 
     <div class="hero-stats">
@@ -718,22 +718,30 @@ function openCart() { document.getElementById('cart-drawer').classList.add('open
 function closeCart() { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); }
 
 // ── CATEGORY FILTER ──────────────────────────────────────────
-function selectCategory(cat, btn) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => { if (t.textContent.trim() === (cat || 'All')) t.classList.add('active'); });
-  document.querySelectorAll('.hero-cat').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.hero-cat').forEach(c => { const s = c.querySelector('span'); if (s && s.textContent.trim().toUpperCase() === (cat||'ALL').toUpperCase()) c.classList.add('active'); });
-  loadProducts(cat);
-  setTimeout(() => { const sec = document.getElementById('own-products-section'); if (sec) sec.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
-}
+// ── MASTER FILTER FUNCTION ───────────────────────────────────
 function filterByCategory(cat) {
+  // 1. Update sticky top bar buttons
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   const catMap = {'':'catbtn-all','Shirts':'catbtn-shirts','T-Shirts':'catbtn-tshirts','Jackets':'catbtn-jackets','Hoodies':'catbtn-hoodies','Pants':'catbtn-pants','Shoes':'catbtn-shoes','Accessories':'catbtn-accessories'};
   const btn = document.getElementById(catMap[cat] || 'catbtn-all');
-  selectCategory(cat, btn);
+  if (btn) btn.classList.add('active');
+
+  // 2. Update filter tabs
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => {
+    const txt = t.textContent.trim().toLowerCase();
+    const target = (cat || 'all').toLowerCase();
+    if (txt === target || (!cat && txt === 'all')) t.classList.add('active');
+  });
+
+  // 3. NO AUTO SCROLL — just filter products in place
+  loadProducts(cat);
+  loadAffiliateProducts(cat);
 }
+
+function selectCategory(cat, btn) { filterByCategory(cat); }
 function goToCategory(cat) { filterByCategory(cat); }
+function goShop(cat) { filterByCategory(cat); }
 
 // ── BLOG ─────────────────────────────────────────────────────
 function openBlogPost(slug) {
@@ -746,12 +754,15 @@ let cart = JSON.parse(localStorage.getItem('mcw_cart') || '[]');
 let currentUser = null;
 
 // ── AFFILIATE DB PRODUCTS (top section) ──────────────────────
-async function loadAffiliateProducts() {
+async function loadAffiliateProducts(category = '') {
   const grid = document.getElementById('affiliate-db-grid');
   if (!grid) return;
   try {
     const res = await fetch(`${API}/products?type=affiliate`);
-    const products = await res.json();
+    let products = await res.json();
+    if (category) {
+      products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+    }
     if (!products.length) {
       grid.innerHTML = '<div style="color:#555;font-size:14px;padding:20px;grid-column:1/-1;text-align:center;">No affiliate products added yet. Add them from Admin Panel!</div>';
       return;
@@ -789,11 +800,16 @@ async function loadAffiliateProducts() {
 async function loadProducts(category = '') {
   const grid = document.getElementById('products-grid');
   if (!grid) return;
-  grid.innerHTML = '<div style="color:#555;font-size:14px;padding:40px;grid-column:1/-1;text-align:center;">Loading products...</div>';
+  grid.innerHTML = '<div style="color:#555;font-size:14px;padding:40px;grid-column:1/-1;text-align:center;">Loading ' + (category || 'all products') + '...</div>';
   try {
-    const url = category ? `${API}/products?category=${encodeURIComponent(category)}` : `${API}/products`;
+    // Always fetch all products, then filter on frontend for instant response
+    const url = `${API}/products?type=own`;
     const res = await fetch(url);
-    const products = await res.json();
+    let products = await res.json();
+    // Filter by category if selected
+    if (category) {
+      products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+    }
     if (!products.length) { grid.innerHTML = '<div style="color:#555;font-size:14px;padding:40px;grid-column:1/-1;text-align:center;">No products found.</div>'; return; }
     grid.innerHTML = products.map(p => {
       const isAffiliate = p.type === 'affiliate';
